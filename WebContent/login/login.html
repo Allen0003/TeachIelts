@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="notesApp">
+
+<head>
+	<meta name="author" content="Allen">
+	<link rel="icon" href="../icon/Think IELTS Lightbulb.jpg">
+
+	<title>Ielts</title>
+
+</head>
+
+<body ng-controller="MainCtrl as ctrl">
+
+	</br>
+	</br>
+	</br>
+	<form ng-submit="ctrl.submit()">
+		Name: <input type="text" ng-model="ctrl.user.username" /> Password :
+		<input type="password" ng-model="ctrl.user.password" /> <input type="submit" valie="Submit">
+
+	</form>
+	<script src="../js/angular.js"></script>
+	<script type="text/javascript">
+		angular.module('notesApp', []).controller('MainCtrl', ['$http', '$window', function($http, $window) {
+			var self = this;
+			self.submit = function() {
+				$http({
+						method: 'POST',
+						url: 'http://127.0.0.1:8080/TeachIelts/app/login',
+						contentType: 'application/json',
+						data: JSON.stringify(self.user) //forms user object
+					})
+					.then(function(response) {
+						$window.location.href = '../' + response.data;
+						return response.data;
+					}, function(response) {
+
+					});
+			}
+		}]);
+	</script>
+</body>
+
+</html>
