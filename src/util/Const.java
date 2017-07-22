@@ -13,4 +13,7 @@ public class Const {
 	public final static String sqlUsername = "root";
 	public final static String sqlPassword = "apss1943";
 	public static final Logger LOGGER = Logger.getLogger(systemName);
+
+	public final static String home = "home/home.html";
+
 }
