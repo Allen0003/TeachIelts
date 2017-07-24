@@ -16,4 +16,6 @@ public class Const {
 
 	public final static String home = "home/home.html";
 
+	public final static String isShow = "Y";
+
 }
