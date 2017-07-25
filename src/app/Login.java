@@ -19,14 +19,23 @@ public class Login {
 
 	@POST
 	public String doLogin(User user) {
+		IeltsBo bo = null;
 		try {
-			IeltsBo bo = new IeltsBo();
+			bo = new IeltsBo();
 			if (bo.checkLogin(user)) {
 				request.getSession(true);
-				request.setAttribute("isLogin", "true");
+				request.setAttribute("isLogin", Const.isLogin);
 			}
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
+		} finally {
+			if (bo != null) {
+				try {
+					bo.disconnect();
+				} catch (Exception e) {
+
+				}
+			}
 		}
 		return Const.home;
 	}
