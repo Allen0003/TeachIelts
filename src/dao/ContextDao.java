@@ -26,12 +26,11 @@ public class ContextDao {
 
 		while (rs.next()) {
 			context = new FileContext();
-
-			context.setCategorization(categorization);
-			context.setContext(rs.getString("Context"));
+			context.setCategorization(rs.getString("categorization"));
+			context.setContext(rs.getString("context"));
 			context.setShow(rs.getString("IsShow").toUpperCase().equals(Const.isShow));
-			System.out.println("time = " + rs.getString("SysTime"));
-
+			context.setUser(rs.getString("sysUser"));
+			context.setSysTime(rs.getString("sysTime"));
 			contexts.add(context);
 		}
 		return contexts;

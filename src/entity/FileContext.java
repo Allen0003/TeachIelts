@@ -1,8 +1,6 @@
 package entity;
 
-import java.util.Date;
-
-public class Context {
+public class FileContext {
 
 	public String context;
 
@@ -10,7 +8,17 @@ public class Context {
 
 	public String categorization;
 
-	public Date sysTime;
+	public String user;
+
+	public String sysTime;
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
 
 	public String getContext() {
 		return context;
@@ -28,11 +36,11 @@ public class Context {
 		this.isShow = isShow;
 	}
 
-	public Date getSysTime() {
+	public String getSysTime() {
 		return sysTime;
 	}
 
-	public void setSysTime(Date sysTime) {
+	public void setSysTime(String sysTime) {
 		this.sysTime = sysTime;
 	}
 
