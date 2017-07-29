@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 public class Const {
 
+	public final static int sqlOK = 1;
+
 	public final static String systemName = "TeachIelts";
 
 	public final static String sqlDriver = "com.mysql.jdbc.Driver";
@@ -17,8 +19,7 @@ public class Const {
 	public final static String home = "home/home.html";
 
 	public final static String isShow = "Y";
-	
-	public final static String isLogin = "true"; 
-	
+
+	public final static String isLogin = "true";
 
 }

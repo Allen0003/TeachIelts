@@ -15,7 +15,7 @@ public class UserDao {
 	}
 
 	public boolean checkLogin(User user) throws Exception {
-		String sql = "select * from Ielts.User where username = ? and password = ?";
+		String sql = "select * from Ielts.User where Username = ? and Password = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, user.getUsername());
 		pstmt.setString(2, user.getPassword());
