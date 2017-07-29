@@ -25,6 +25,7 @@ public class Login {
 			if (bo.checkLogin(user)) {
 				request.getSession(true);
 				request.setAttribute("isLogin", Const.isLogin);
+				request.setAttribute("username", user.getUsername());
 			}
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
