@@ -23,9 +23,6 @@ public class UploadContext {
 
 	@POST
 	public void doUplaoding(Upload upload) {
-
-		System.out.println(upload.getCategorization());
-
 		// FileContext context
 		IeltsBo bo = null;
 		request.getSession(true);
@@ -45,7 +42,7 @@ public class UploadContext {
 		fileContext.setSysTime(dateFormat.format(date));
 		try {
 			bo = new IeltsBo();
-			// bo.setContext(fileContext);
+			bo.setContext(fileContext);
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
 		} finally {
