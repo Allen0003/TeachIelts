@@ -12,6 +12,7 @@ import javax.ws.rs.core.Context;
 
 import bo.IeltsBo;
 import entity.FileContext;
+import entity.Upload;
 import util.Const;
 
 @Path("/upload")
@@ -21,7 +22,10 @@ public class UploadContext {
 	private HttpServletRequest request;
 
 	@POST
-	public void doUplaoding(String context) {
+	public void doUplaoding(Upload upload) {
+
+		System.out.println(upload.getCategorization());
+
 		// FileContext context
 		IeltsBo bo = null;
 		request.getSession(true);
@@ -29,19 +33,19 @@ public class UploadContext {
 		if (request.getAttribute("isLogin") != null && request.getAttribute("isLogin").equals(Const.isLogin)) {
 
 		}
-
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();
 
 		FileContext fileContext = new FileContext();
-		fileContext.setContext(context);
+		fileContext.setTitle(upload.getTitle());
+		fileContext.setContext(upload.getContext());
 		fileContext.setCategorization("R");
 		fileContext.setShow(true);
 		fileContext.setUser("Chris");
 		fileContext.setSysTime(dateFormat.format(date));
 		try {
 			bo = new IeltsBo();
-			bo.setContext(fileContext);
+			// bo.setContext(fileContext);
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
 		} finally {
@@ -53,7 +57,5 @@ public class UploadContext {
 				}
 			}
 		}
-
 	}
-
 }

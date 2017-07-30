@@ -31,20 +31,22 @@ public class ContextDao {
 			context.setShow(rs.getString("IsShow").toUpperCase().equals(Const.isShow));
 			context.setUser(rs.getString("sysUser"));
 			context.setSysTime(rs.getString("sysTime"));
+			context.setTitle(rs.getString("title"));
 			contexts.add(context);
 		}
 		return contexts;
 	}
 
 	public boolean setContext(FileContext fileContext) throws Exception {
-		String sql = "insert into Ielts.Context " + "(Categorization, Context, IsShow, SysUser, SysTime)"
-				+ " values(?,?,?,?,?)";
+		String sql = "insert into Ielts.Context " + "(Categorization, Context, IsShow, SysUser, SysTime, Title)"
+				+ " values(?,?,?,?,?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, fileContext.getCategorization());
 		pstmt.setString(2, fileContext.getContext());
 		pstmt.setString(3, fileContext.isShow() ? "Y" : "N");
 		pstmt.setString(4, fileContext.getUser());
 		pstmt.setString(5, fileContext.getSysTime());
+		pstmt.setString(6, fileContext.getTitle());
 
 		return pstmt.executeUpdate() == Const.sqlOK;
 	}
