@@ -22,4 +22,9 @@ public class Const {
 
 	public final static String isLogin = "true";
 
+	public final static String reading = "R";
+	public final static String listening = "L";
+	public final static String speaking = "S";
+	public final static String writing1 = "W1";
+	public final static String writing2 = "W2";
 }
