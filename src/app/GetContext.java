@@ -1,10 +1,11 @@
-package GetWriting1;
+package app;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
@@ -12,16 +13,18 @@ import com.google.gson.Gson;
 import bo.IeltsBo;
 import entity.FileContext;
 import util.Const;
+import util.Util;
 
-@Path("/writing2")
-public class GetWriting2 {
+@Path("/")
+public class GetContext {
 	@GET
-	public Response getWriting2() {
+	@Path("context/{action}")
+	public Response getReading(@PathParam("action") String action) {
 		ArrayList<FileContext> result = null;
 		IeltsBo bo = null;
 		try {
 			bo = new IeltsBo();
-			result = bo.getContext(Const.writing2);
+			result = bo.getContext(Util.getAction(action));
 
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);

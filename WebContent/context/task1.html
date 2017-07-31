@@ -61,7 +61,7 @@
                             <li><a href="../context/task2.html">Task2</a></li>
                         </ul>
                     </li>
-                    <li><a href="../context/Speaking.html">Speaking</a></li>
+                    <li><a href="../context/speaking.html">Speaking</a></li>
                 </ul>
             </div>
         </div>
@@ -89,7 +89,7 @@
     <script type="text/javascript">
         var app = angular.module('notesApp', []);
         app.controller('MainCtrl', function($scope, $http) {
-            $http.get("http://127.0.0.1:8080/TeachIelts/app/writing1")
+            $http.get("http://127.0.0.1:8080/TeachIelts/app/context/writing1")
                 .then(function(response) {
                     $scope.items = response.data;
                 });

@@ -89,7 +89,7 @@
     <script type="text/javascript">
         var app = angular.module('notesApp', []);
         app.controller('MainCtrl', function($scope, $http) {
-            $http.get("http://127.0.0.1:8080/TeachIelts/app/context/listening")
+            $http.get("http://127.0.0.1:8080/TeachIelts/app/context/speaking")
                 .then(function(response) {
                     $scope.items = response.data;
                 });
