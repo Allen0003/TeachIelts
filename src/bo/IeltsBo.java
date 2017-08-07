@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 
+import dao.AWSSQL;
 import dao.ContextDao;
 import dao.UserDao;
 import entity.FileContext;
@@ -16,20 +17,21 @@ public class IeltsBo {
 
 	UserDao userDao;
 	ContextDao contextDao;
+	AWSSQL awsSQL;
 
 	public IeltsBo() throws Exception {
 		Class.forName(Const.sqlDriver);
 		conn = DriverManager.getConnection(Const.sqlUrl, Const.sqlUsername, Const.sqlPassword);
+		System.out.println("connect ok");
 	}
 
-	
-	public boolean setContext(FileContext fileContext) throws Exception{
+	public boolean setContext(FileContext fileContext) throws Exception {
 		if (contextDao == null) {
 			contextDao = new ContextDao(this.conn);
 		}
 		return contextDao.setContext(fileContext);
 	}
-	
+
 	public ArrayList<FileContext> getContext(String categorization) throws Exception {
 
 		if (contextDao == null) {
@@ -46,6 +48,34 @@ public class IeltsBo {
 		return userDao.checkLogin(user);
 	}
 
+	public void createIeltsDB() throws Exception {
+		if (awsSQL == null) {
+			awsSQL = new AWSSQL(this.conn);
+		}
+		awsSQL.createDB();
+	}
+
+	public void createTable() throws Exception {
+		if (awsSQL == null) {
+			awsSQL = new AWSSQL(this.conn);
+		}
+		awsSQL.createTable();
+	}
+
+	public void seeAll() throws Exception {
+		if (awsSQL == null) {
+			awsSQL = new AWSSQL(this.conn);
+		}
+		awsSQL.seeAll();
+	}
+
+	public void insertOne() throws Exception {
+		if (awsSQL == null) {
+			awsSQL = new AWSSQL(this.conn);
+		}
+		awsSQL.insertOne();
+	}
+
 	public void disconnect() throws Exception {
 		if (conn != null) {
 			conn.close();
@@ -55,4 +85,9 @@ public class IeltsBo {
 	public void finalize() throws Exception {
 		disconnect();
 	}
+
+	public static void main(String[] args) {
+
+	}
+
 }
