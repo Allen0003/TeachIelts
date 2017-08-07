@@ -90,6 +90,7 @@
     <script src="../js/bootstrap.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <script src="../js/const.js"></script>
     <script type="text/javascript">
         angular.module('notesApp', []).controller('MainCtrl', ['$http', '$scope', function($http, $scope) {
             var self = this;
@@ -124,7 +125,7 @@
                     self.context.categorization = self.context.categorization.value;
                     $http({
                             method: 'POST',
-                            url: 'http://127.0.0.1:8080/TeachIelts/app/upload',
+                            url: globaleURL + 'app/upload',
                             contentType: 'application/json',
                             data: JSON.stringify(self.context) //forms user object
                         })

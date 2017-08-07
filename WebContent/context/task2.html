@@ -84,12 +84,13 @@
     <script src="../js/angular.js"></script>
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.js"></script>
+    <script src="../js/const.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
     <script type="text/javascript">
         var app = angular.module('notesApp', []);
         app.controller('MainCtrl', function($scope, $http) {
-            $http.get("http://127.0.0.1:8080/TeachIelts/app/context/writing2")
+        		$http.get( globaleURL + "app/context/writing2")
                 .then(function(response) {
                     $scope.items = response.data;
                 });
