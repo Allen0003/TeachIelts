@@ -6,19 +6,43 @@
 	<link rel="icon" href="../icon/Think IELTS Lightbulb.jpg">
 
 	<title>Ielts</title>
+	<!-- Bootstrap core CSS -->
+	<link href="../css/bootstrap.css" rel="stylesheet">
+	<!-- Bootstrap theme -->
+	<link href="../css/bootstrap-theme.css" rel="stylesheet">
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
+	<!-- Custom styles for this template -->
+	<link href="../css/theme.css" rel="stylesheet">
+
+	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+	<!--[if lt IE 9]><script src="../../js/ie8-responsive-file-warning.js"></script><![endif]-->
+	<script src="../js/ie-emulation-modes-warning.js"></script>
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
 </head>
 
-<body ng-controller="MainCtrl as ctrl">
+<body role="document" ng-controller="MainCtrl as ctrl">
 
-	</br>
-	</br>
-	</br>
-	<form ng-submit="ctrl.submit()">
-		Name: <input type="text" ng-model="ctrl.user.username" /> Password :
-		<input type="password" ng-model="ctrl.user.password" /> <input type="submit" valie="Submit">
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	</nav>
+	<!--Navbars-->
+	<div class="container theme-showcase" role="main">
+		<h1>Login:</h1>
+		</br>
+		</br>
+		<form ng-submit="ctrl.submit()">
+			Name: <input type="text" ng-model="ctrl.user.username" /> Password :
+			<input type="password" ng-model="ctrl.user.password" /> <input type="submit" valie="Submit">
 
-	</form>
+		</form>
+	</div>
 	<script src="../js/angular.js"></script>
 	<script type="text/javascript">
 		angular.module('notesApp', []).controller('MainCtrl', ['$http', '$window', function($http, $window) {
@@ -26,12 +50,12 @@
 			self.submit = function() {
 				$http({
 						method: 'POST',
-						url: 'http://127.0.0.1:8080/TeachIelts/app/login',
+						url: globaleURL + 'app/login',
 						contentType: 'application/json',
 						data: JSON.stringify(self.user) //forms user object
 					})
 					.then(function(response) {
-						$window.location.href = '../' + response.data;
+						$window.location.href = globaleURL + response.data;
 						return response.data;
 					}, function(response) {
 
