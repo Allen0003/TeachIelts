@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+
+import com.google.gson.Gson;
 
 import bo.IeltsBo;
 import entity.User;
@@ -18,7 +21,8 @@ public class Login {
 	private HttpServletRequest request;
 
 	@POST
-	public String doLogin(User user) {
+	public Response doLogin(User user) {
+
 		IeltsBo bo = null;
 		try {
 			bo = new IeltsBo();
@@ -26,6 +30,7 @@ public class Login {
 				request.getSession(true);
 				request.setAttribute("isLogin", Const.isLogin);
 				request.setAttribute("username", user.getUsername());
+				return Response.status(200).entity(new Gson().toJson(Const.home)).build();
 			}
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
@@ -38,6 +43,6 @@ public class Login {
 				}
 			}
 		}
-		return Const.home;
+		return Response.status(403).build();
 	}
 }

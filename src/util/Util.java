@@ -2,7 +2,7 @@ package util;
 
 public class Util {
 
-	public static String getAction(String action) throws Exception {
+	public static String getCategorization(String action) {
 		switch (action.toLowerCase()) {
 		case "reading":
 			return Const.reading;
@@ -15,7 +15,7 @@ public class Util {
 		case "writing2":
 			return Const.writing2;
 		default:
-			throw new Exception("unknow action");
+			return "unknown";
 		}
 	}
 

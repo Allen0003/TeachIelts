@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
 
+import annotation.LoginCheck;
 import bo.IeltsBo;
 import entity.FileContext;
 import util.Const;
@@ -18,13 +19,15 @@ import util.Util;
 @Path("/")
 public class GetContext {
 	@GET
+	@LoginCheck
 	@Path("context/{action}")
+
 	public Response getReading(@PathParam("action") String action) {
 		ArrayList<FileContext> result = null;
 		IeltsBo bo = null;
 		try {
 			bo = new IeltsBo();
-			result = bo.getContext(Util.getAction(action));
+			result = bo.getContext(Util.getCategorization(action));
 
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
