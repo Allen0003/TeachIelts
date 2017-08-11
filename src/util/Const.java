@@ -12,11 +12,15 @@ public class Const {
 
 	public final static String sqlUrl = "jdbc:mysql://localhost:3306";
 
+	// public final static String sqlUrl =
+	// "jdbc:mysql://ielts.cl1vrrp07ocv.us-east-2.rds.amazonaws.com:3306";
+
 	public final static String sqlUsername = "root";
 	public final static String sqlPassword = "apss1943";
 	public static final Logger LOGGER = Logger.getLogger(systemName);
 
 	public final static String home = "home/home.html";
+	public final static String upload = "manager/upload";
 
 	public final static String isShow = "Y";
 

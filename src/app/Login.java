@@ -30,7 +30,7 @@ public class Login {
 				request.getSession(true);
 				request.setAttribute("isLogin", Const.isLogin);
 				request.setAttribute("username", user.getUsername());
-				return Response.status(200).entity(new Gson().toJson(Const.home)).build();
+				return Response.status(200).entity(new Gson().toJson(Const.upload)).build();
 			}
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
