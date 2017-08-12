@@ -44,6 +44,7 @@
 		</form>
 	</div>
 	<script src="../js/angular.js"></script>
+	<script src="../js/const.js"></script>
 	<script type="text/javascript">
 		angular.module('notesApp', []).controller('MainCtrl', ['$http', '$window', function($http, $window) {
 			var self = this;
@@ -54,11 +55,11 @@
 						contentType: 'application/json',
 						data: JSON.stringify(self.user) //forms user object
 					})
-					.then(function(response) {
-						$window.location.href = globaleURL + response.data;
-						return response.data;
-					}, function(response) {
-
+					.success(function(data, status, headers, config) {
+						alert("login!");
+						$window.location.href = globaleURL + data.replace("\"","").replace("\"","");
+					}).error(function(data, status, headers, config) {
+  					alert("invalid account or password");
 					});
 			}
 		}]);
