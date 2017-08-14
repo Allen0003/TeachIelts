@@ -9,7 +9,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="Allen">
-    <link rel="icon" href="icon/Allen icon.ico">
+    <link rel="icon" href="../icon/Think IELTS Lightbulb.jpg">
 
     <title>Ielts</title>
 
@@ -90,7 +90,7 @@
     <script type="text/javascript">
         var app = angular.module('notesApp', []);
         app.controller('MainCtrl', function($scope, $http) {
-            $http.get( globaleURL + "app/context/listening")
+            $http.get(globaleURL + "app/context/listening")
                 .then(function(response) {
                     $scope.items = response.data;
                 });

@@ -20,7 +20,7 @@ public class Const {
 	public static final Logger LOGGER = Logger.getLogger(systemName);
 
 	public final static String home = "home/home.html";
-	public final static String upload = "manager/upload";
+	public final static String upload = "manager/upload.html";
 
 	public final static String isShow = "Y";
 
@@ -31,4 +31,12 @@ public class Const {
 	public final static String speaking = "S";
 	public final static String writing1 = "W1";
 	public final static String writing2 = "W2";
+	public final static String TheIELTSTest = "T";
+	public final static String AboutThinkIELTS = "A";
+	public final static String StudyingEnglish = "SE";
+
+	// The IELTS Test - T
+	// About Think IELTS - A
+	// Studying English - SE
+
 }

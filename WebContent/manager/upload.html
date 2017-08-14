@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="notesApp">
+<script src="http://www.w3schools.com/lib/w3data.js"></script>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="Allen">
+    <link rel="icon" href="../icon/Think IELTS Lightbulb.jpg">
+
+    <title>Ielts</title>
+
+
+    <link href="../css/Font/font.css" rel="stylesheet">
+    <link href="../css/build.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="../css/bootstrap-theme.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/theme.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="../js/ckeditor.js"></script>
+    <script src="../js/sample.js"></script>
+</head>
+
+<body role="document" ng-controller="MainCtrl as ctrl">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+    </nav>
+    <!--Navbars-->
+
+    <div class="container theme-showcase" role="main">
+        <form ng-submit="ctrl.submit()" name="myForm" method='get'>
+            <div class="page-header">
+                <h1>Title: <input type = "text" ng-model="ctrl.context.title" placeholder="Title" required></h1> Categorization:
+                <select ng-model="ctrl.context.categorization" ng-options="item as item.name for item in items" required>
+                  <option value="">Please select</option>
+
+                  </select>
+                <!-- TODO angular version -->
+                <p></p>
+
+                <!-- <label data-ng-repeat="item in items">
+                  <input type="radio" name="categorization"
+                  data-ng-model="item.value" data-ng-value="item.name" />
+                  {{item.name}}&nbsp;&nbsp;&nbsp;
+                </label> -->
+                <!-- <div class="row">
+                    <div class="col-md-4">
+                        <fieldset>
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="inlineRadio1" value="R" name="radioInline">
+                                <label for="inlineRadio1" required>
+                							Reading </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div> -->
+            </div>
+
+            <p>
+
+                <!-- <textarea id="editor" style="width: 800px; height: 300px;" ng-model="ctrl.context.context" placeholder="context" onchange="showView()" onkeyup="showView()">
+      				  </textarea> -->
+
+                <textarea style="width: 800px; height: 300px;" ng-model="ctrl.context.context" placeholder="context" onchange="showView()" onkeyup="showView()" id="textEdit" required>
+                </textarea>
+                <p>
+                (You can use HTML tags like &lt;b>, &lt;br> &lt;i> and &lt;ul> to style your text. URLs automatically linked.)
+              </p>
+                </br>
+                <button type="button" value="Bold" id="bold" class="btn btn-sm btn-danger">Bold</button>
+                <button type="button" value="Italic" id="italic" class="btn btn-sm btn-primary">Italic</button>
+                <button type="button" value="Change line" id="line" class="btn btn-sm btn-info">Change line</button>
+                </br>
+            </p>
+
+            <h2><b>View: </h2></b>
+            <div id="view"></div>
+            <p></p>
+            <button type="submit" value="Submit" class="btn btn-sm btn-danger">Submit</button>
+
+        </form>
+    </div>
+    <!-- /container -->
+    <script src="../js/angular.js"></script>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <script src="../js/const.js"></script>
+    <script type="text/javascript">
+        // CKEDITOR.replace('editor');
+        angular.module('notesApp', []).controller('MainCtrl', ['$http', '$scope', function($http, $scope) {
+            var self = this;
+            $scope.items = [{
+                    id: 1,
+                    name: 'Reading',
+                    value: 'R'
+                },
+                {
+                    id: 2,
+                    name: 'Listening',
+                    value: 'L'
+                },
+                {
+                    id: 3,
+                    name: 'Speaking',
+                    value: 'S'
+                },
+                {
+                    id: 4,
+                    name: 'Writing Task1',
+                    value: 'W1'
+                },
+                {
+                    id: 5,
+                    name: 'Writing Task2',
+                    value: 'W2'
+                },
+                {
+                    id: 6,
+                    name: 'The IELTS Test',
+                    value: 'T'
+                },
+                {
+                    id: 7,
+                    name: 'About Think IELTS',
+                    value: 'A'
+                },
+                {
+                    id: 8,
+                    name: 'Studying English',
+                    value: 'SE'
+                }
+            ];
+            self.submit = function() {
+                if (confirm("Are you sure?")) {
+                    console.log(self.context);
+                    self.context.categorization = self.context.categorization.value;
+                    $http({
+                            method: 'POST',
+                            url: globaleURL + 'app/upload',
+                            contentType: 'application/json',
+                            data: JSON.stringify(self.context) //forms user object
+                        })
+                        // .then(function(response) {
+                        //     alert("done");
+                        // }, function(response) {});
+                        .success(function(data, status, headers, config) {
+                            alert("done!");
+                            //TODO reflash page!!!
+                            // $window.location.href = globaleURL + data.replace("\"", "").replace("\"", "");
+                        }).error(function(data, status, headers, config) {
+                          //TODO handle 403!
+                            console.log(data);
+                            alert("please check input data");
+                        });
+                }
+            }
+        }]);
+
+
+        function showView() {
+            var message = $("#textEdit").val();
+            $('#view').empty().append(message);
+        }
+
+        function doChange(textBefore, textAfter, text) {
+            $('#textEdit').val(textBefore + text + textAfter);
+        }
+        $('#bold').on('click', function() {
+            var cursorPos = $('#textEdit').prop('selectionStart');
+            var v = $('#textEdit').val();
+            doChange(v.substring(0, cursorPos), v.substring(cursorPos, v.length), "<b></b>");
+        });
+
+        $('#italic').on('click', function() {
+            var cursorPos = $('#textEdit').prop('selectionStart');
+            var v = $('#textEdit').val();
+            doChange(v.substring(0, cursorPos), v.substring(cursorPos, v.length), "<i></i>");
+        });
+
+
+        $('#line').on('click', function() {
+            var cursorPos = $('#textEdit').prop('selectionStart');
+            var v = $('#textEdit').val();
+            //TODO GET heighted start and end
+            doChange(v.substring(0, cursorPos), v.substring(cursorPos, v.length), "<br>");
+        });
+    </script>
+</body>
+
+</html>
+<!-- TODO  get radio value && change area text value -->
