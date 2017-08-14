@@ -29,7 +29,8 @@ public class Const {
 	public final static String reading = "R";
 	public final static String listening = "L";
 	public final static String speaking = "S";
-	public final static String writing1 = "W1";
+	public final static String generalWriting1 = "GW1";
+	public final static String academicWriting1 = "AW1";
 	public final static String writing2 = "W2";
 	public final static String TheIELTSTest = "T";
 	public final static String AboutThinkIELTS = "A";

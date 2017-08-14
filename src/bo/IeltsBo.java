@@ -22,7 +22,6 @@ public class IeltsBo {
 	public IeltsBo() throws Exception {
 		Class.forName(Const.sqlDriver);
 		conn = DriverManager.getConnection(Const.sqlUrl, Const.sqlUsername, Const.sqlPassword);
-		System.out.println("connect ok");
 	}
 
 	public boolean setContext(FileContext fileContext) throws Exception {

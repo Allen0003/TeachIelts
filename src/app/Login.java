@@ -3,6 +3,7 @@ package app;
 import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
@@ -27,9 +28,9 @@ public class Login {
 		try {
 			bo = new IeltsBo();
 			if (bo.checkLogin(user)) {
-				request.getSession(true);
-				request.setAttribute("isLogin", Const.isLogin);
-				request.setAttribute("username", user.getUsername());
+				HttpSession session = request.getSession(true);
+				session.setAttribute("isLogin", Const.isLogin);
+				session.setAttribute("username", user.getUsername());
 				return Response.status(200).entity(new Gson().toJson(Const.upload)).build();
 			}
 		} catch (Exception e) {

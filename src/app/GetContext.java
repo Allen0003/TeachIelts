@@ -28,7 +28,6 @@ public class GetContext {
 		try {
 			bo = new IeltsBo();
 			result = bo.getContext(Util.getCategorization(action));
-
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
 		} finally {

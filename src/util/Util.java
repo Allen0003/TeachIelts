@@ -10,10 +10,18 @@ public class Util {
 			return Const.listening;
 		case "speaking":
 			return Const.speaking;
-		case "writing1":
-			return Const.writing1;
+		case "generalwriting1":
+			return Const.generalWriting1;
+		case "academicwriting1":
+			return Const.academicWriting1;
 		case "writing2":
 			return Const.writing2;
+		case "ieltstest":
+			return Const.TheIELTSTest;
+		case "thinkielts":
+			return Const.AboutThinkIELTS;
+		case "studying":
+			return Const.StudyingEnglish;
 		default:
 			return "unknown";
 		}
