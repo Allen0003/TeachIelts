@@ -1,34 +1,62 @@
 .bottom {
-	margin: 0 0 10px 0;
-	border: 1px dotted #999999;
-	padding: 3px;
-	color: #666666;
-	font-family: Arial, sans-serif;
-	font-size: x-small;
-	line-height: normal;
-	text-align: left;
-	font-weight: bold;
+    margin: 0 0 10px 0;
+    border: 1px dotted #999999;
+    padding: 3px;
+    color: #666666;
+    font-family: Arial, sans-serif;
+    font-size: x-small;
+    line-height: normal;
+    text-align: left;
+    font-weight: bold;
 }
 
 .header {
-	margin: 1px 0 10px 0;
-	border: 0;
-	color: #000000;
-	font-family: Arial, sans-serif;
-	font-size: medium;
-	line-height: normal;
-	text-align: left;
-	font-weight: bold;
+    margin: 1px 0 10px 0;
+    border: 0;
+    color: #000000;
+    font-family: Arial, sans-serif;
+    font-size: medium;
+    line-height: normal;
+    text-align: left;
+    font-weight: bold;
+}
+
+.fakeHyperline {
+    background: linear-gradient( #1abc9c 50%, #444 50%);
+    text-align: center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 1s ease;
+    border-bottom: 1px solid black;
+}
+
+.fakeHyperline:hover {
+    background: white;
+		-webkit-text-fill-color: initial;
+    color: blue;
+    cursor: pointer;
+}
+
+.floatLeft {
+    float: left;
 }
 
 .left15 {
-	padding-left: 15px;
-}
-
-.businessLogo {
-	background-image: url('../icon/ThinkIELTS Logo.png');
+    padding-left: 15px;
 }
 
 .w150 {
-	width: 150px;
+    width: 150px;
+}
+
+.ml50 {
+    margin-left: 50px;
+}
+
+.mt30 {
+    margin-top: 30px;
+}
+
+.mt5 {
+    margin-top: 5px;
 }
