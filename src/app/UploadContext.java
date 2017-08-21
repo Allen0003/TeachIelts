@@ -12,9 +12,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import com.sun.jersey.spi.container.ResourceFilters;
+
 import bo.IeltsBo;
 import entity.FileContext;
 import entity.Upload;
+import filter.CheckLogin;
 import util.Const;
 
 @Path("/upload")
@@ -23,44 +26,39 @@ public class UploadContext {
 
 	@Context
 	private HttpServletRequest request;
-
 	@POST
-	// @LoginCheck
+	@ResourceFilters(CheckLogin.class)
 	public Response doUplaoding(Upload upload) {
 
 		// FileContext context
 		IeltsBo bo = null;
 		HttpSession session = request.getSession(true);
-		// TODO changing to AOP
-		if ((session.getAttribute("isLogin") != null && session.getAttribute("isLogin").equals(Const.isLogin))) {
 
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			Date date = new Date();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		Date date = new Date();
 
-			FileContext fileContext = new FileContext();
-			fileContext.setTitle(upload.getTitle());
-			fileContext.setContext(upload.getContext());
-			fileContext.setCategorization(upload.getCategorization());
-			fileContext.setShow(true);
-			fileContext.setUser(
-					session.getAttribute("username") != null ? session.getAttribute("username").toString() : "");
-			fileContext.setSysTime(dateFormat.format(date));
-			try {
-				bo = new IeltsBo();
-				bo.setContext(fileContext);
-			} catch (Exception e) {
-				Const.LOGGER.log(Level.WARNING, e.toString(), e);
-			} finally {
-				if (bo != null) {
-					try {
-						bo.disconnect();
-					} catch (Exception e) {
+		FileContext fileContext = new FileContext();
+		fileContext.setTitle(upload.getTitle());
+		fileContext.setContext(upload.getContext());
+		fileContext.setCategorization(upload.getCategorization());
+		fileContext.setShow(true);
+		fileContext
+				.setUser(session.getAttribute("username") != null ? session.getAttribute("username").toString() : "");
+		fileContext.setSysTime(dateFormat.format(date));
+		try {
+			bo = new IeltsBo();
+			bo.setContext(fileContext);
+		} catch (Exception e) {
+			Const.LOGGER.log(Level.WARNING, e.toString(), e);
+		} finally {
+			if (bo != null) {
+				try {
+					bo.disconnect();
+				} catch (Exception e) {
 
-					}
 				}
 			}
-			return Response.status(200).build();
 		}
-		return Response.status(403).build();
+		return Response.status(200).build();
 	}
 }
