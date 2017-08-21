@@ -10,7 +10,6 @@ import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
 
-import annotation.LoginCheck;
 import bo.IeltsBo;
 import entity.FileContext;
 import util.Const;
@@ -19,7 +18,6 @@ import util.Util;
 @Path("/")
 public class GetContext {
 	@GET
-	@LoginCheck
 	@Path("context/{action}")
 
 	public Response getReading(@PathParam("action") String action) {
