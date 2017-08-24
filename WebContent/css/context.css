@@ -32,8 +32,12 @@
 
 .fakeHyperline:hover {
     background: white;
-		-webkit-text-fill-color: initial;
+    -webkit-text-fill-color: initial;
     color: blue;
+    cursor: pointer;
+}
+
+.goHome:hover {
     cursor: pointer;
 }
 
@@ -41,13 +45,16 @@
     float: right;
 }
 
-
-.goHome:hover{
-  cursor: pointer;
-}
-
 .floatLeft {
     float: left;
+}
+
+.floatABRight {
+    /*clear:left;*/
+    /*position:static !important;
+    position: absolute;
+    right: 0;
+    padding-right: 40px;*/
 }
 
 .left15 {

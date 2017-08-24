@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="notesApp">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +21,7 @@
 
     <!-- Custom styles for this template -->
     <link href="../css/theme.css" rel="stylesheet">
-    <link href="../css/context.css" rel="stylesheet">
+
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -31,12 +32,11 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <link href="../css/context.css" rel="stylesheet">
 </head>
 
 <body role="document" ng-controller="MainCtrl as ctrl">
 
-    <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -68,27 +68,31 @@
                             <li><a ng-click="click('studying')">Studying English</a></li>
                         </ul>
                     </li>
+                    <!-- TODO: put to right -->
+                    <li class = "floatABRight"><a href="../login/login.html">Login</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!-- class="container theme-showcase" -->
     <div class="container theme-showcase" role="main">
         <div class="w150 floatLeft">
             <img src="../icon/ThinkIELTS Logo.png" class="goHome" />
             <br><br><br>
             <p>
-                <div ng-repeat="item in items" class="mt5">
-                    <div class="header fakeHyperline">
-                        {{item.sysTime}}
+                <div class="header fakeHyperline" ng-click="myFilter.monthFilter = ''">show all</div>
+                </br>
+                <div ng-repeat="item in items | filterByMonth" class="mt5">
+
+                    <div class="header fakeHyperline" ng-click="myFilter.monthFilter = item.monthFilter">
+                        {{item.sysTime.trunc(8)}}
                     </div>
                     </br>
-
                 </div>
+
             </p>
         </div>
         <div class="floatLeft ml50">
-            <div ng-repeat="item in items" class="mt30">
+            <div ng-repeat="item in items | filter:myFilter " class="animate mt30">
                 <div class="header">{{item.title}}</div>
                 </br>
                 <div compile="item.context"></div>
@@ -100,7 +104,10 @@
         </div>
     </div>
     <!-- /container -->
+
+    <script src="../js/function.js"></script>
     <script src="../js/angular.js"></script>
+
     <script src="../js/jquery.js"></script>
     <script src="../js/const.js"></script>
     <script src="../js/bootstrap.js"></script>
@@ -108,38 +115,56 @@
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
     <script type="text/javascript">
         var app = angular.module('notesApp', []);
-        app.controller('MainCtrl', function($scope, $http, $location) {
+        app.controller('MainCtrl', function($scope, $http, $location, $filter) {
 
-            var val = $location.search()['val'];
-            if (!val) {
-                val = "reading";
-            }
-            changeData(val);
+                $scope.myFilter = {};
 
-            $scope.click = function(dataType) {
-                changeData(dataType);
-            };
+                var val = $location.search()['val'];
+                if (!val) {
+                    val = "reading";
+                }
+                changeData(val);
 
-            function changeData(dataType) {
-                $http.get(globaleURL + "app/context/" + dataType)
-                    .then(function(response) {
-                        $scope.items = response.data;
+                $scope.click = function(dataType) {
+                    changeData(dataType);
+                };
+
+                function changeData(dataType) {
+                    $http.get(globaleURL + "app/context/" + dataType)
+                        .then(function(response) {
+                            $scope.items = response.data;
+                        });
+                }
+
+            }).directive('compile', ['$compile', function($compile) {
+                return function(scope, element, attrs) {
+                    scope.$watch(
+                        function(scope) {
+                            return scope.$eval(attrs.compile);
+                        },
+                        function(value) {
+                            element.html(value);
+                            $compile(element.contents())(scope);
+                        }
+                    );
+                };
+            }])
+            .filter('filterByMonth', function() {
+                return function(collection, keyname) {
+                    var output = [],
+                        months = [];
+                    angular.forEach(collection, function(item) {
+                        var temp = item.sysTime.substring(0, 7);
+                        item.monthFilter = temp;
+                        // console.log(item);
+                        if (months.indexOf(temp) === -1) {
+                            months.push(temp);
+                            output.push(item);
+                        }
                     });
-            }
-
-        }).directive('compile', ['$compile', function($compile) {
-            return function(scope, element, attrs) {
-                scope.$watch(
-                    function(scope) {
-                        return scope.$eval(attrs.compile);
-                    },
-                    function(value) {
-                        element.html(value);
-                        $compile(element.contents())(scope);
-                    }
-                );
-            };
-        }]);
+                    return output;
+                };
+            });
     </script>
 </body>
 
