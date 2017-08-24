@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 import dao.AWSSQL;
 import dao.ContextDao;
+import dao.ManuBarDao;
 import dao.UserDao;
 import entity.FileContext;
+import entity.ManuBar;
 import entity.User;
 import util.Const;
 
@@ -17,6 +19,7 @@ public class IeltsBo {
 
 	UserDao userDao;
 	ContextDao contextDao;
+	ManuBarDao manuBarDao;
 	AWSSQL awsSQL;
 
 	public IeltsBo() throws Exception {
@@ -31,6 +34,13 @@ public class IeltsBo {
 		return contextDao.setContext(fileContext);
 	}
 
+	public ArrayList<ManuBar> getManuBars() throws Exception {
+		if (manuBarDao == null) {
+			manuBarDao = new ManuBarDao(this.conn);
+		}
+		return manuBarDao.getManuBar();
+	}
+
 	public ArrayList<FileContext> getContext(String categorization) throws Exception {
 
 		if (contextDao == null) {
@@ -39,7 +49,8 @@ public class IeltsBo {
 
 		return contextDao.getContext(categorization);
 	}
-
+	
+	
 	public boolean checkLogin(User user) throws Exception {
 		if (userDao == null) {
 			userDao = new UserDao(this.conn);
@@ -84,9 +95,4 @@ public class IeltsBo {
 	public void finalize() throws Exception {
 		disconnect();
 	}
-
-	public static void main(String[] args) {
-
-	}
-
 }
