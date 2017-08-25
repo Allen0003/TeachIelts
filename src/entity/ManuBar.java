@@ -1,18 +1,30 @@
 package entity;
 
+import java.util.ArrayList;
+
 public class ManuBar {
 
 	String name;
 
 	String value;
 
-	String[] subClass;
+	String subClass;
 
 	boolean isMain;
 
 	String order;
 
 	boolean isDrop;
+
+	ArrayList<ManuBar> mySubs;
+
+	public ArrayList<ManuBar> getMySubs() {
+		return mySubs;
+	}
+
+	public void setMySubs(ArrayList<ManuBar> mySubs) {
+		this.mySubs = mySubs;
+	}
 
 	public boolean isDrop() {
 		return isDrop;
@@ -46,11 +58,11 @@ public class ManuBar {
 		this.value = value;
 	}
 
-	public String[] getSubClass() {
+	public String getSubClass() {
 		return subClass;
 	}
 
-	public void setSubClass(String[] subClass) {
+	public void setSubClass(String subClass) {
 		this.subClass = subClass;
 	}
 

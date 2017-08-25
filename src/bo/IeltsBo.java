@@ -49,8 +49,7 @@ public class IeltsBo {
 
 		return contextDao.getContext(categorization);
 	}
-	
-	
+
 	public boolean checkLogin(User user) throws Exception {
 		if (userDao == null) {
 			userDao = new UserDao(this.conn);
@@ -84,6 +83,28 @@ public class IeltsBo {
 			awsSQL = new AWSSQL(this.conn);
 		}
 		awsSQL.insertOne();
+	}
+
+	public void updManuBar(ArrayList<ManuBar> inpus) throws Exception {
+		if (manuBarDao == null) {
+			manuBarDao = new ManuBarDao(conn);
+		}
+		try {
+			conn.setAutoCommit(false);
+			manuBarDao.delManuBar();
+			manuBarDao.addManuBars(inpus);
+			this.conn.commit();
+		} catch (Exception e) {
+			try {
+				this.conn.rollback();
+			} catch (Exception e1) {
+			}
+		} finally {
+			try {
+				this.conn.setAutoCommit(true);
+			} catch (Exception e) {
+			}
+		}
 	}
 
 	public void disconnect() throws Exception {
