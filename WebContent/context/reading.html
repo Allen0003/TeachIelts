@@ -41,39 +41,33 @@
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span> <span
-          class="icon-bar"></span> <span class="icon-bar"></span> <span
-          class="icon-bar"></span>
-      </button>
+      <span class="sr-only">Toggle navigation</span> <span
+        class="icon-bar"></span> <span class="icon-bar"></span> <span
+        class="icon-bar"></span>
+    </button>
                 <a class="navbar-brand" href="../home/home.html">Home</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a ng-click="click('Reading')">Reading</a></li>
-                    <li><a ng-click="click('Listening')">Listening</a></li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    Writing <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a ng-click="click('generalwriting1')">General Task1</a></li>
-                            <li><a ng-click="click('academicwriting1')">Academic Task1</a></li>
-                            <li><a ng-click="click('writing2')">Task2</a></li>
-                        </ul>
+                <ul class="nav navbar-nav" ng-repeat="manu in manus">
+                    <li ng-show="manu.isMain && manu.isDrop == 'N' ">
+                        <a ng-click="click(manu.value)"> {{manu.name}}
+            </a>
                     </li>
-                    <li><a ng-click="click('Speaking')">Speaking</a></li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    English <span class="caret"></span></a>
+                    <li ng-show="manu.isMain && manu.isDrop " class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    {{manu.name}} <span class="caret"></span>
+                    </a>
                         <ul class="dropdown-menu">
-                            <li><a ng-click="click('ieltstest')">The IELTS Test</a></li>
-                            <li><a ng-click="click('thinkielts')">About Think IELTS</a></li>
-                            <li><a ng-click="click('studying')">Studying English</a></li>
+                            <li ng-repeat="manuSubs in manu.mySubs"><a ng-click="click(manuSubs.value)">{{manuSubs.name}}</a></li>
                         </ul>
-                    </li>
-                    <!-- TODO: put to right -->
-                    <li class = "floatABRight"><a href="../login/login.html">Login</a></li>
+                        <li class="floatABRight" ng-show="$last">
+                            <a href="../login/login.html">Login</a>
+                        </li>
                 </ul>
             </div>
         </div>
     </nav>
+
     <div class="container theme-showcase" role="main">
         <div class="w150 floatLeft">
             <img src="../icon/ThinkIELTS Logo.png" class="goHome" />
@@ -116,6 +110,11 @@
     <script type="text/javascript">
         var app = angular.module('notesApp', []);
         app.controller('MainCtrl', function($scope, $http, $location, $filter) {
+
+                $http.get(globaleURL + "app/getManuBar")
+                    .then(function(response) {
+                        $scope.manus = response.data;
+                    });
 
                 $scope.myFilter = {};
 

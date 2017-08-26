@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="notesApp">
 
 <head>
 	<meta charset="utf-8">
@@ -33,7 +33,7 @@
     <![endif]-->
 </head>
 
-<body role="document">
+<body role="document" ng-controller="MainCtrl as ctrl">
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
@@ -46,27 +46,21 @@
 				<a class="navbar-brand" href="../home/home.html">Home</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="../context/reading.html#?val=reading">Reading</a></li>
-					<li><a href="../context/reading.html#?val=listening">Listening</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-									Writing <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="../context/reading.html#?val=generalwriting1">General Task1</a></li>
-							<li><a href="../context/reading.html#?val=academicwriting1">Academic Task1</a></li>
-							<li><a href="../context/reading.html#?val=writing2">Task2</a></li>
-						</ul>
+				<ul class="nav navbar-nav" ng-repeat="manu in manus">
+					<li ng-show="manu.isMain && manu.isDrop == 'N' ">
+						<a href="../context/reading.html#?val={{manu.value}}"> {{manu.name}}
+						</a>
 					</li>
-					<li><a href="../context/reading.html#?val=speaking">Speaking</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-									English <span class="caret"></span></a>
+					<li ng-show="manu.isMain && manu.isDrop " class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+										{{manu.name}} <span class="caret"></span>
+										</a>
 						<ul class="dropdown-menu">
-							<li><a href="../context/reading.html#?val=ieltstest">The IELTS Test</a></li>
-							<li><a href="../context/reading.html#?val=thinkielts">About Think IELTS</a></li>
-							<li><a href="../context/reading.html#?val=studying">Studying English</a></li>
+							<li ng-repeat="manuSubs in manu.mySubs"><a href="../context/reading.html#?val={{manuSubs.value}}">{{manuSubs.name}}</a></li>
 						</ul>
-					</li>
-					<li class="floatABRight"><a href="../login/login.html">Login</a></li>
+						<li class="floatABRight" ng-show ="$last">
+							<a href="../login/login.html">Login</a>
+						</li>
 				</ul>
 			</div>
 		</div>
@@ -94,8 +88,18 @@
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js/const.js"></script>
+	<script src="../js/angular.js"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="../js/ie10-viewport-bug-workaround.js"></script>
+	<script type="text/javascript">
+		var app = angular.module('notesApp', []);
+		app.controller('MainCtrl', function($scope, $http, $location) {
+			$http.get(globaleURL + "app/getManuBar")
+				.then(function(response) {
+					$scope.manus = response.data;
+				});
+		});
+	</script>
 </body>
 
 </html>
