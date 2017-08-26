@@ -51,11 +51,9 @@ public class ManuBarDao {
 			pstmt.setString(3, manuBar.getSubClass());
 			pstmt.setString(4, manuBar.getIsMain());
 			pstmt.setString(5, manuBar.getOrder());
-			pstmt.setString(6, manuBar.getIsDrop());
+			pstmt.setString(6, manuBar.getIsDrop().equals("") ? "N" : manuBar.getIsDrop());
 			pstmt.addBatch();
 		}
-		
-		System.out.println("i am here ");
 		pstmt.executeBatch();
 		conn.commit();
 	}

@@ -1,5 +1,6 @@
 package util;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class Const {
@@ -23,21 +24,10 @@ public class Const {
 	public final static String upload = "manager/upload.html";
 
 	public final static String isShow = "Y";
+	public final static String isMain = "Y";
+	public final static String isDrop = "Y";
 
 	public final static String isLogin = "true";
 
-	public final static String reading = "R";
-	public final static String listening = "L";
-	public final static String speaking = "S";
-	public final static String generalWriting1 = "GW1";
-	public final static String academicWriting1 = "AW1";
-	public final static String writing2 = "W2";
-	public final static String TheIELTSTest = "T";
-	public final static String AboutThinkIELTS = "A";
-	public final static String StudyingEnglish = "SE";
-
-	// The IELTS Test - T
-	// About Think IELTS - A
-	// Studying English - SE
-
+	public static HashMap<String, String> manuMap = new HashMap<String, String>();
 }

@@ -14,16 +14,15 @@ import com.google.gson.Gson;
 import bo.IeltsBo;
 import entity.ManuBar;
 import util.Const;
-import util.Util;
 
-@Path("/getManuBar")
-public class GetManuBar {
+@Path("/getRawManuBar")
+public class GetRawManuBar {
 
 	@Context
 	private HttpServletRequest request;
 
 	@GET
-	public Response getManu() {
+	public Response getRawManu() {
 		ArrayList<ManuBar> result = null;
 		IeltsBo bo = null;
 		try {
@@ -36,8 +35,10 @@ public class GetManuBar {
 			try {
 				bo.disconnect();
 			} catch (Exception e) {
+
 			}
 		}
-		return Response.status(200).entity(new Gson().toJson(Util.setManaData(result))).build();
+
+		return Response.status(200).entity(new Gson().toJson(result)).build();
 	}
 }

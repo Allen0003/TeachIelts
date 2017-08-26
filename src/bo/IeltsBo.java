@@ -95,14 +95,17 @@ public class IeltsBo {
 			manuBarDao.addManuBars(inpus);
 			this.conn.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			try {
 				this.conn.rollback();
 			} catch (Exception e1) {
+				throw new Exception(e1);
 			}
 		} finally {
 			try {
 				this.conn.setAutoCommit(true);
 			} catch (Exception e) {
+				throw new Exception(e);
 			}
 		}
 	}
