@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import dao.AWSSQL;
 import dao.ContextDao;
+import dao.HomePageDao;
 import dao.ManuBarDao;
 import dao.UserDao;
 import entity.FileContext;
@@ -20,11 +21,44 @@ public class IeltsBo {
 	UserDao userDao;
 	ContextDao contextDao;
 	ManuBarDao manuBarDao;
+	HomePageDao homePageDao;
 	AWSSQL awsSQL;
 
 	public IeltsBo() throws Exception {
 		Class.forName(Const.sqlDriver);
 		conn = DriverManager.getConnection(Const.sqlUrl, Const.sqlUsername, Const.sqlPassword);
+	}
+
+	public String getHomeContext() throws Exception {
+		if (homePageDao == null) {
+			homePageDao = new HomePageDao(conn);
+		}
+		return homePageDao.getHomePage();
+	}
+
+	public void updHomeContext(String input) throws Exception {
+		if (homePageDao == null) {
+			homePageDao = new HomePageDao(conn);
+		}
+		try {
+			conn.setAutoCommit(false);
+			homePageDao.delHomePage();
+			homePageDao.addHomePage(input);
+			this.conn.commit();
+		} catch (Exception e) {
+			try {
+				this.conn.rollback();
+			} catch (Exception e1) {
+				throw new Exception(e1);
+			}
+			throw new Exception(e);
+		} finally {
+			try {
+				this.conn.setAutoCommit(true);
+			} catch (Exception e) {
+				throw new Exception(e);
+			}
+		}
 	}
 
 	public boolean setContext(FileContext fileContext) throws Exception {
@@ -95,12 +129,12 @@ public class IeltsBo {
 			manuBarDao.addManuBars(inpus);
 			this.conn.commit();
 		} catch (Exception e) {
-			e.printStackTrace();
 			try {
 				this.conn.rollback();
 			} catch (Exception e1) {
 				throw new Exception(e1);
 			}
+			throw new Exception(e);
 		} finally {
 			try {
 				this.conn.setAutoCommit(true);

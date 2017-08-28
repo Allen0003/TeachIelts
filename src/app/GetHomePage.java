@@ -1,34 +1,30 @@
 package app;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
-import com.sun.jersey.spi.container.ResourceFilters;
+import com.google.gson.Gson;
 
 import bo.IeltsBo;
-import entity.ManuBar;
-import filter.CheckLogin;
 import util.Const;
 
-@Path("/updManubar")
-public class UpdManuBar {
-
+@Path("/getHomePage")
+public class GetHomePage {
 	@Context
 	private HttpServletRequest request;
 
-	@POST
-	@ResourceFilters(CheckLogin.class)
-	public Response UpdManu(ArrayList<ManuBar> manuBars) {
+	@GET
+	public Response getHomeContext() {
 		IeltsBo bo = null;
+		String result = null;
 		try {
 			bo = new IeltsBo();
-			bo.updManuBar(manuBars);
+			result = bo.getHomeContext();
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
 		}
@@ -39,6 +35,6 @@ public class UpdManuBar {
 
 			}
 		}
-		return Response.status(200).build();
+		return Response.status(200).entity(new Gson().toJson(result)).build();
 	}
 }

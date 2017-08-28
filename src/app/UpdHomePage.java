@@ -1,6 +1,5 @@
 package app;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,26 +8,21 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
-import com.sun.jersey.spi.container.ResourceFilters;
-
 import bo.IeltsBo;
-import entity.ManuBar;
-import filter.CheckLogin;
 import util.Const;
 
-@Path("/updManubar")
-public class UpdManuBar {
+@Path("/updHomePage")
+public class UpdHomePage {
 
 	@Context
 	private HttpServletRequest request;
 
 	@POST
-	@ResourceFilters(CheckLogin.class)
-	public Response UpdManu(ArrayList<ManuBar> manuBars) {
+	public Response UpdHomeContext(String homePage) {
 		IeltsBo bo = null;
 		try {
 			bo = new IeltsBo();
-			bo.updManuBar(manuBars);
+			bo.updHomeContext(homePage);
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
 		}
