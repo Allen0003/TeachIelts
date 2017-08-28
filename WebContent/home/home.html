@@ -58,7 +58,7 @@
 						<ul class="dropdown-menu">
 							<li ng-repeat="manuSubs in manu.mySubs"><a href="../context/reading.html#?val={{manuSubs.value}}">{{manuSubs.name}}</a></li>
 						</ul>
-						<li class="floatABRight" ng-show ="$last">
+						<li class="floatABRight" ng-show="$last">
 							<a href="../login/login.html">Login</a>
 						</li>
 				</ul>
@@ -74,7 +74,7 @@
 		<br><br><br>
 		<div class="jumbotron">
 			<h1>Teacher Chris: </h1>
-			<p>You are doing brilliantly! Your tutor Chris 😊.</p>
+			<p>{{home}}</p>
 		</div>
 		<br><br><br>
 		<br><br><br>
@@ -98,6 +98,11 @@
 				.then(function(response) {
 					$scope.manus = response.data;
 				});
+			$http.get(globaleURL + "app/getHomePage")
+				.then(function(response) {
+					$scope.home = response.data.substring(0, response.data.length - 1).substr(1);
+				});
+
 		});
 	</script>
 </body>

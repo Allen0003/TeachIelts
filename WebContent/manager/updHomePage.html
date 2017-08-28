@@ -9,7 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="Allen">
     <link rel="icon" href="../icon/Think IELTS Lightbulb.jpg">
+
     <title>Ielts</title>
+
+
     <link href="../css/Font/font.css" rel="stylesheet">
     <link href="../css/build.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->
@@ -53,28 +56,13 @@
         </div>
     </nav>
 
-
     <div class="container theme-showcase" role="main">
-        <form ng-submit="ctrl.submit()" name="myForm">
-            <div ng-repeat="manu in manus" class="form-inline">
-                <p>
-                    IsMain:
-                    <input class="form-check-input" type="checkbox" ng-model="manu.isMain" ng-checked="manu.isMain == 'Y'" ng-change="setCheckBox(manu.isMain,manu)"> &nbsp;&nbsp;&nbsp;&nbsp; Name:
-                    <label class="sr-only" for="inlineFormInput"></label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-model="manu.name" ng-change="assignValue(manu.name,manu)" required/> Value: <label class="sr-only" for="inlineFormInput"></label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-model="manu.value" readonly required> Subclass: <label class="sr-only" for="inlineFormInput"></label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-model="manu.subClass" ng-readonly="manu.isMain == 'Y'"> IsDrop:
-                    <input class="form-check-input" type="checkbox" ng-model="manu.isDrop" ng-checked="manu.isDrop == 'Y'" ng-change="setCheckBox2(manu.isDrop,manu)"> Order:
-                    <label class="sr-only" for="inlineFormInput"></label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-model="manu.order">
-                    <button type="button" value="Del" class="btn btn-sm btn-info" ng-click='del($index)'>Del</button>
-                </p>
-            </div>
-
-            <p></p>
-            <button type="button" value="Add" class="btn btn-sm btn-primary" ng-click='add()'>Add</button>
+        <form ng-submit="ctrl.submit()" name="myForm" method='get'>
+            <p>
+                <textarea style="width: 400px; height: 200px;" ng-model="home">
+                </textarea>
+            </p>
             <button type="submit" value="Submit" class="btn btn-sm btn-danger">Submit</button>
-
         </form>
     </div>
     <!-- /container -->
@@ -85,64 +73,37 @@
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
     <script src="../js/const.js"></script>
     <script type="text/javascript">
-        var app = angular.module('notesApp', []);
-        app.controller('MainCtrl', function($scope, $http, $location) {
-
+        angular.module('notesApp', []).controller('MainCtrl', ['$http', '$scope', '$window', function($http, $scope, $window) {
+            //check is login
             $http.get(globaleURL + "app/getSession?id=isLogin")
                 .error(function(data, status, headers, config) {
                     $window.location.href = '../login/login.html';
                 });
 
-            var self = this;
-            $http.get(globaleURL + "app/getRawManuBar")
+            $http.get(globaleURL + "app/getHomePage")
                 .then(function(response) {
-                    $scope.manus = response.data;
+                    $scope.home = response.data.substring(0, response.data.length - 1).substr(1);
                 });
-            $scope.setCheckBox2 = function(val, obj) {
-                obj.isDrop = val ? 'Y' : "N";
-            }
-            $scope.setCheckBox = function(val, obj) {
-                obj.isMain = val ? 'Y' : "N";
-                obj.subClass = val ? subClass : "";
-            }
 
-            $scope.assignValue = function(val, obj) {
-                obj.value = val.replace(/ +/g, "").toLowerCase();
-            }
-            $scope.add = function() {
-                var name = {
-                    "name": "",
-                    "value": "",
-                    "subClass": "",
-                    "isMain": "",
-                    "order": "",
-                    "isDrop": ""
-                };
-                $scope.manus.push(name);
-            }
-
-            $scope.del = function(i) {
-                if (confirm("Are you sure?")) {
-                    $scope.manus.splice(i, 1);
-                }
-            }
-
+            var self = this;
             self.submit = function() {
                 if (confirm("Are you sure?")) {
                     $http({
                             method: 'POST',
-                            url: globaleURL + 'app/updManubar',
+                            url: globaleURL + 'app/updHomePage',
                             contentType: 'application/json',
-                            data: JSON.parse(angular.toJson($scope.manus))
+                            data: $scope.home
                         })
                         .success(function(data, status, headers, config) {
                             alert("done!");
+                            //TODO reflash page!!!
                         }).error(function(data, status, headers, config) {
+                            //TODO handle 403!
                             alert("please check input data");
                         });
                 }
             }
-        });
+        }]);
     </script>
 </body>
 
