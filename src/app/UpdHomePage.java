@@ -8,7 +8,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import com.sun.jersey.spi.container.ResourceFilters;
+
 import bo.IeltsBo;
+import filter.CheckLogin;
 import util.Const;
 
 @Path("/updHomePage")
@@ -18,6 +21,7 @@ public class UpdHomePage {
 	private HttpServletRequest request;
 
 	@POST
+	@ResourceFilters(CheckLogin.class)
 	public Response UpdHomeContext(String homePage) {
 		IeltsBo bo = null;
 		try {

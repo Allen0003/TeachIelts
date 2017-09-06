@@ -26,6 +26,7 @@ public class UploadContext {
 
 	@Context
 	private HttpServletRequest request;
+
 	@POST
 	@ResourceFilters(CheckLogin.class)
 	public Response doUplaoding(Upload upload) {
@@ -50,6 +51,7 @@ public class UploadContext {
 			bo.setContext(fileContext);
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
+			return Response.status(403).build();
 		} finally {
 			if (bo != null) {
 				try {

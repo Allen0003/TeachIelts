@@ -52,7 +52,7 @@
                         <a href="../manager/manuBar.html"> manuBar</a>
                     </li>
                     <li>
-                        <a href="../manager/updHomePage.html"> manuBar</a>
+                        <a href="../manager/updHomePage.html"> updHome</a>
                     </li>
                 </ul>
             </div>
@@ -131,6 +131,34 @@
                 }
             }
         }]);
+
+        function showView() {
+            var message = $("#textEdit").val();
+            $('#view').empty().append(message);
+        }
+
+        function doChange(textBefore, textAfter, text) {
+            $('#textEdit').val(textBefore + text + textAfter);
+        }
+        $('#bold').on('click', function() {
+            var cursorPos = $('#textEdit').prop('selectionStart');
+            var v = $('#textEdit').val();
+            doChange(v.substring(0, cursorPos), v.substring(cursorPos, v.length), "<b></b>");
+        });
+
+        $('#italic').on('click', function() {
+            var cursorPos = $('#textEdit').prop('selectionStart');
+            var v = $('#textEdit').val();
+            doChange(v.substring(0, cursorPos), v.substring(cursorPos, v.length), "<i></i>");
+        });
+
+
+        $('#line').on('click', function() {
+            var cursorPos = $('#textEdit').prop('selectionStart');
+            var v = $('#textEdit').val();
+            //TODO GET heighted start and end
+            doChange(v.substring(0, cursorPos), v.substring(cursorPos, v.length), "<br>");
+        });
     </script>
 </body>
 
