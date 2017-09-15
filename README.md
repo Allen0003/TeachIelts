@@ -1,4 +1,4 @@
-# UI one
+# UI 
 
 
-https://github.com/Allen0003/TeachIelts/blob/master/UI%20one.png
+![alt text](https://github.com/Allen0003/TeachIelts/blob/master/UI%20one.png)
