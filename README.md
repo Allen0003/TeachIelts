@@ -1,4 +1,4 @@
 # TeachIelts
 
 
-![Image](./UI one.png)
+![Image](../UI one.png)
