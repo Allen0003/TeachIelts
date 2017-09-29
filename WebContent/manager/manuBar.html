@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="notesApp">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,7 +34,6 @@
 </head>
 
 <body role="document" ng-controller="MainCtrl as ctrl">
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div id="navbar">
@@ -55,23 +55,35 @@
         </div>
     </nav>
 
+    <div class="centeredDiv" ng-show="showCenter">
+        <div ng-repeat="manu in manus" ng-show="manu.order==''">
+            <input type="checkbox" class="mb-2 mr-sm-2 mb-sm-0" /> {{manu.name}}
+        </div>
+
+<!-- ng-click='addSub($index)' -->
+        <button type="button" ng-click = 'comfirm()'
+        value="Confirm" class="btn btn-sm btn-danger">Confirm</button>
+    </div>
+
+
 
     <div class="container theme-showcase" role="main">
         <form ng-submit="ctrl.submit()" name="myForm">
-            <div ng-repeat="manu in manus" class="form-inline">
-                <p>
+            <ul ui-sortable="{axis:'y'}" ng-model="manus">
+                <li ng-repeat="manu in manus">
                     IsMain:
                     <input class="form-check-input" type="checkbox" ng-model="manu.isMain" ng-checked="manu.isMain == 'Y'" ng-change="setCheckBox(manu.isMain,manu)"> &nbsp;&nbsp;&nbsp;&nbsp; Name:
                     <label class="sr-only" for="inlineFormInput"></label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-model="manu.name" ng-change="assignValue(manu.name,manu)" required/> Value: <label class="sr-only" for="inlineFormInput"></label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-model="manu.value" readonly required> Subclass: <label class="sr-only" for="inlineFormInput"></label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-model="manu.subClass" ng-readonly="manu.isMain == 'Y'"> IsDrop:
+                    <input type="text" class="mb-2 mr-sm-2 mb-sm-0 widthInherit" ng-model="manu.name" ng-change="assignValue(manu.name,manu)" required/> Value: <label class="sr-only" for="inlineFormInput"></label>
+                    <input type="text" class="mb-2 mr-sm-2 mb-sm-0 readOnly widthInherit" ng-model="manu.value" readonly required> Subclass: <label class="sr-only" for="inlineFormInput"></label>
+                    <input type="text" class="mb-2 mr-sm-2 mb-sm-0 widthInherit" ng-model="manu.subClass" ng-readonly="manu.isMain == 'Y'"> IsDrop:
                     <input class="form-check-input" type="checkbox" ng-model="manu.isDrop" ng-checked="manu.isDrop == 'Y'" ng-change="setCheckBox2(manu.isDrop,manu)"> Order:
                     <label class="sr-only" for="inlineFormInput"></label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-model="manu.order">
+                    <input type="text" size="2" class="mb-2 mr-sm-2 mb-sm-0 readOnly widthInherit" ng-model="manu.order" readonly>
+                    <button type="button" value="Sub" class="btn btn-sm btn-success" ng-click='addSub($index)'>Sub</button>
                     <button type="button" value="Del" class="btn btn-sm btn-info" ng-click='del($index)'>Del</button>
-                </p>
-            </div>
+                </li>
+            </ul>
 
             <p></p>
             <button type="button" value="Add" class="btn btn-sm btn-primary" ng-click='add()'>Add</button>
@@ -79,6 +91,11 @@
 
         </form>
     </div>
+
+    <!-- TODO download this file!!! -->
+    <script src='https://cdn.jsdelivr.net/g/jquery@1,jquery.ui@1.10%28jquery.ui.core.min.js+jquery.ui.widget.min.js+jquery.ui.mouse.min.js+jquery.ui.sortable.min.js%29,angularjs@1.2,angular.ui-sortable'></script>
+
+
     <!-- /container -->
     <script src="../js/angular.js"></script>
     <script src="../js/jquery.js"></script>
@@ -86,9 +103,40 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
     <script src="../js/const.js"></script>
+
+
     <script type="text/javascript">
-        var app = angular.module('notesApp', []);
+        var app = angular.module('notesApp', ['ui.sortable']);
         app.controller('MainCtrl', function($scope, $http, $location) {
+
+
+            var showCenter = false;
+
+            $scope.addSub = function(i) {
+                $scope.showCenter = true;
+            }
+
+            $scope.comfirm = function() {
+              // alert("aa");
+              alert("aaa");
+                $scope.showCenter = false;
+                alert("aa");
+            }
+
+
+
+            $scope.$watch("manus", function() {
+                var i = 1;
+                console.log($scope.manus);
+                for (var manu in $scope.manus) {
+                    console.log($scope.manus[manu]);
+                    if ($scope.manus[manu].isMain == "Y") {
+                        $scope.manus[manu].order = i++;
+                    } else {
+                        $scope.manus[manu].order = "";
+                    }
+                }
+            }, true);
 
             $http.get(globaleURL + "app/getSession?id=isLogin")
                 .error(function(data, status, headers, config) {
