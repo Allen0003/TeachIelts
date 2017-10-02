@@ -22,10 +22,8 @@
 }
 
 .fakeHyperline {
-    background: linear-gradient( #1abc9c 50%, #444 50%);
     text-align: center;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     transition: all 1s ease;
     border-bottom: 1px solid black;
 }
