@@ -35,6 +35,29 @@
 
 <body role="document" ng-controller="MainCtrl as ctrl">
 
+	<div ng-controller="ContactUsCtrl as subCtrl">
+		<button id="contactUs" ng-click="subCtrl.showCotact()">
+			<p><font color = "white"><b>Contact us!</b></font></p></button>
+		<div ng-show="subCtrl.getIsShown()" id="contactUsForm">
+			<form ng-submit="subCtrl.submit()">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Email address</label>
+					<input type="email" class="form-control" placeholder="Enter email" ng-model="subCtrl.mail.emailAddress" required>
+					<small class="form-text text-muted">We'll never share your email with anyone else.</small>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Title</label>
+					<input type="text" ng-model="subCtrl.mail.title" class="form-control" placeholder="Title" required>
+				</div>
+				<div class="form-group">
+					<textarea style="width: 400px; height: 200px;" ng-model="subCtrl.mail.context" placeholder="Context" required>
+					</textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</div>
+
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -91,19 +114,78 @@
 	<script src="../js/angular.js"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="../js/ie10-viewport-bug-workaround.js"></script>
+	<!-- <script src="../js/contactUs.js"></script>  -->
+
 	<script type="text/javascript">
 		var app = angular.module('notesApp', []);
-		app.controller('MainCtrl', function($scope, $http, $location) {
-			$http.get(globaleURL + "app/getManuBar")
-				.then(function(response) {
-					$scope.manus = response.data;
-				});
-			$http.get(globaleURL + "app/getHomePage")
-				.then(function(response) {
-					$scope.home = response.data.substring(0, response.data.length - 1).substr(1);
-				});
+		app
+			.service('contactUsService', [contactUsService]) //DI service
+			.controller('MainCtrl', function($scope, $http, $location) {
+				$http.get(globaleURL + "app/getManuBar")
+					.then(function(response) {
+						$scope.manus = response.data;
+					});
+				$http.get(globaleURL + "app/getHomePage")
+					.then(function(response) {
+						$scope.home = response.data.substring(0, response.data.length - 1).substr(1);
+					});
+			})
+			.controller('ContactUsCtrl', ['contactUsService', '$http', function(contactUsService, $http) {
+				var self = this;
+				var util = contactUsService;
+				self.showCotact = function() {
+					util.setShow();
+				};
 
-		});
+				self.submit = function() {
+					console.log(JSON.stringify(self.mail));
+
+					var mail = {
+						emailAddress: "OPEN",
+						title: "1338364250000",
+						context: "1336364253400"
+					};
+
+
+					$http({
+							method: 'POST',
+							url: globaleURL + 'app/sendMail',
+							data: mail,
+							headers: {
+								'Content-Type': 'application/json'
+							}
+						})
+						.success(function(data, status, headers, config) {
+							alert("done!");
+							util.setNoShow();
+						}).error(function(data, status, headers, config) {
+							alert("please check input data");
+						});
+				}
+
+				self.getIsShown = function() {
+					return util.shown();
+				};
+			}]);
+
+
+		function contactUsService() {
+			var isShown = false;
+			//private paramters for service
+
+			//public
+			this.setShow = function() {
+				isShown = true;
+			};
+
+			this.setNoShow = function() {
+				isShown = false;
+			};
+
+			this.shown = function() {
+				return isShown;
+			};
+		}
 	</script>
 </body>
 

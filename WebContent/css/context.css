@@ -1,76 +1,90 @@
 .bottom {
-    margin: 0 0 10px 0;
-    border: 1px dotted #999999;
-    padding: 3px;
-    color: #666666;
-    font-family: Arial, sans-serif;
-    font-size: x-small;
-    line-height: normal;
-    text-align: left;
-    font-weight: bold;
+	margin: 0 0 10px 0;
+	border: 1px dotted #999999;
+	padding: 3px;
+	color: #666666;
+	font-family: Arial, sans-serif;
+	font-size: x-small;
+	line-height: normal;
+	text-align: left;
+	font-weight: bold;
 }
 
 .header {
-    margin: 1px 0 10px 0;
-    border: 0;
-    color: #000000;
-    font-family: Arial, sans-serif;
-    font-size: medium;
-    line-height: normal;
-    text-align: left;
-    font-weight: bold;
+	margin: 1px 0 10px 0;
+	border: 0;
+	color: #000000;
+	font-family: Arial, sans-serif;
+	font-size: medium;
+	line-height: normal;
+	text-align: left;
+	font-weight: bold;
 }
 
 .fakeHyperline {
-    text-align: center;
-    -webkit-background-clip: text;
-    transition: all 1s ease;
-    border-bottom: 1px solid black;
+	text-align: center;
+	-webkit-background-clip: text;
+	transition: all 1s ease;
+	border-bottom: 1px solid black;
 }
 
 .fakeHyperline:hover {
-    background: white;
-    -webkit-text-fill-color: initial;
-    color: blue;
-    cursor: pointer;
+	background: white;
+	-webkit-text-fill-color: initial;
+	color: blue;
+	cursor: pointer;
 }
 
 .goHome:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .floatRight {
-    float: right;
+	float: right;
 }
 
 .floatLeft {
-    float: left;
-}
-
-.floatABRight {
-    /*clear:left;*/
-    /*position:static !important;
-    position: absolute;
-    right: 0;
-    padding-right: 40px;*/
+	float: left;
 }
 
 .left15 {
-    padding-left: 15px;
+	padding-left: 15px;
 }
 
 .w150 {
-    width: 150px;
+	width: 150px;
 }
 
 .ml50 {
-    margin-left: 50px;
+	margin-left: 50px;
 }
 
 .mt30 {
-    margin-top: 30px;
+	margin-top: 30px;
 }
 
 .mt5 {
-    margin-top: 5px;
+	margin-top: 5px;
+}
+
+#contactUs {
+	position: fixed;
+	bottom: 0 !important;
+	right: 20px !important;
+	background-color: #5ba0d0 !important;
+	animation-name: loadTab;
+	border: 0 !important;
+	padding: 0 20px !important;
+	-webkit-font-smoothing: antialiased !important;
+	font-c
+}
+
+#contactUsForm {
+	position: fixed;
+	width: 500px;
+	height: 200px;
+	top: 40%;
+	left: 50%;
+	margin-top: -100px; /* Negative half of height. */
+	margin-left: -250px; /* Negative half of width. */
 }
