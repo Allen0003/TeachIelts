@@ -60,9 +60,8 @@
             <input type="checkbox" class="mb-2 mr-sm-2 mb-sm-0" /> {{manu.name}}
         </div>
 
-<!-- ng-click='addSub($index)' -->
-        <button type="button" ng-click = 'comfirm()'
-        value="Confirm" class="btn btn-sm btn-danger">Confirm</button>
+        <!-- ng-click='addSub($index)' -->
+        <button type="button" ng-click='comfirm()' value="Confirm" class="btn btn-sm btn-danger">Confirm</button>
     </div>
 
 
@@ -117,13 +116,8 @@
             }
 
             $scope.comfirm = function() {
-              // alert("aa");
-              alert("aaa");
                 $scope.showCenter = false;
-                alert("aa");
             }
-
-
 
             $scope.$watch("manus", function() {
                 var i = 1;
