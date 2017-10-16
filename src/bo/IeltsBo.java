@@ -68,6 +68,13 @@ public class IeltsBo {
 		return contextDao.setContext(fileContext);
 	}
 
+	public boolean delContext(int del_id) throws Exception {
+		if (contextDao == null) {
+			contextDao = new ContextDao(this.conn);
+		}
+		return contextDao.delContext(del_id);
+	}
+
 	public ArrayList<ManuBar> getManuBars() throws Exception {
 		if (manuBarDao == null) {
 			manuBarDao = new ManuBarDao(this.conn);
@@ -76,13 +83,20 @@ public class IeltsBo {
 	}
 
 	public ArrayList<FileContext> getContext(String categorization) throws Exception {
-
 		if (contextDao == null) {
 			contextDao = new ContextDao(this.conn);
 		}
-
 		return contextDao.getContext(categorization);
 	}
+	
+	public ArrayList<FileContext> getContext() throws Exception {
+		if (contextDao == null) {
+			contextDao = new ContextDao(this.conn);
+		}
+		return contextDao.getContext();
+	}
+	
+	
 
 	public boolean checkLogin(User user) throws Exception {
 		if (userDao == null) {

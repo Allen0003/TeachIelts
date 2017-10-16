@@ -15,10 +15,7 @@ public class ContextDao {
 		this.conn = conn;
 	}
 
-	public ArrayList<FileContext> getContext(String categorization) throws Exception {
-		String sql = "select * from Ielts.Context where categorization = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, categorization);
+	private ArrayList<FileContext> doGetQuery(PreparedStatement pstmt) throws Exception {
 		ResultSet rs = pstmt.executeQuery();
 		FileContext context = null;
 
@@ -37,6 +34,19 @@ public class ContextDao {
 		return contexts;
 	}
 
+	public ArrayList<FileContext> getContext() throws Exception {
+		String sql = "select * from Ielts.Context";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		return doGetQuery(pstmt);
+	}
+
+	public ArrayList<FileContext> getContext(String categorization) throws Exception {
+		String sql = "select * from Ielts.Context where categorization = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, categorization);
+		return doGetQuery(pstmt);
+	}
+
 	public boolean setContext(FileContext fileContext) throws Exception {
 		String sql = "insert into Ielts.Context " + "(Categorization, Context, IsShow, SysUser, SysTime, Title)"
 				+ " values(?,?,?,?,?,?)";
@@ -48,6 +58,13 @@ public class ContextDao {
 		pstmt.setString(5, fileContext.getSysTime());
 		pstmt.setString(6, fileContext.getTitle());
 
+		return pstmt.executeUpdate() == Const.sqlOK;
+	}
+
+	public boolean delContext(int del_id) throws Exception {
+		String sql = " delete from Ielts.Context where Id = ? ";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, del_id);
 		return pstmt.executeUpdate() == Const.sqlOK;
 	}
 
