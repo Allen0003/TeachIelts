@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="Allen">
     <link rel="icon" href="../icon/Think IELTS Lightbulb.jpg">
@@ -49,6 +48,9 @@
                     </li>
                     <li>
                         <a href="../manager/updHomePage.html"> updHome</a>
+                    </li>
+                    <li>
+                        <a href="../manager/manageContext.html"> updContext</a>
                     </li>
                 </ul>
             </div>
@@ -107,8 +109,6 @@
     <script type="text/javascript">
         var app = angular.module('notesApp', ['ui.sortable']);
         app.controller('MainCtrl', function($scope, $http, $location) {
-
-
             var showCenter = false;
 
             $scope.addSub = function(i) {
@@ -121,9 +121,7 @@
 
             $scope.$watch("manus", function() {
                 var i = 1;
-                console.log($scope.manus);
                 for (var manu in $scope.manus) {
-                    console.log($scope.manus[manu]);
                     if ($scope.manus[manu].isMain == "Y") {
                         $scope.manus[manu].order = i++;
                     } else {

@@ -29,6 +29,7 @@ public class ContextDao {
 			context.setUser(rs.getString("sysUser"));
 			context.setSysTime(rs.getString("sysTime"));
 			context.setTitle(rs.getString("title"));
+			context.setId(rs.getString("Id"));
 			contexts.add(context);
 		}
 		return contexts;
@@ -57,14 +58,22 @@ public class ContextDao {
 		pstmt.setString(4, fileContext.getUser());
 		pstmt.setString(5, fileContext.getSysTime());
 		pstmt.setString(6, fileContext.getTitle());
-
 		return pstmt.executeUpdate() == Const.sqlOK;
 	}
 
 	public boolean delContext(int del_id) throws Exception {
-		String sql = " delete from Ielts.Context where Id = ? ";
+		String sql = "delete from Ielts.Context where Id = ? ";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, del_id);
+		return pstmt.executeUpdate() == Const.sqlOK;
+	}
+
+	public boolean updContext(FileContext fileContext) throws Exception {
+		String sql = "update Ielts.Context set Context = ?, Title = ? where Id = ? ";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, fileContext.getContext());
+		pstmt.setString(2, fileContext.getTitle());
+		pstmt.setString(3, fileContext.getId());
 		return pstmt.executeUpdate() == Const.sqlOK;
 	}
 

@@ -8,12 +8,10 @@
     <meta name="description" content="">
     <meta name="author" content="Allen">
     <link rel="icon" href="../icon/Think IELTS Lightbulb.jpg">
-
     <title>Ielts</title>
-
-
     <link href="../css/Font/font.css" rel="stylesheet">
     <link href="../css/build.css" rel="stylesheet">
+    <link href="../css/context.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
     <!-- Bootstrap theme -->
@@ -60,15 +58,29 @@
         </div>
     </nav>
 
-    <div class="container theme-showcase" role="main">
-        <form ng-submit="ctrl.submit()" name="myForm" method='get'>
-            <p>
-                <textarea style="width: 400px; height: 200px;" ng-model="home">
-                </textarea>
-            </p>
-            <button type="submit" value="Submit" class="btn btn-sm btn-danger">Submit</button>
-        </form>
+    <div class="centeredDiv" ng-show="showCenter">
+        <div ng-repeat="manu in manus" ng-show="manu.order==''">
+            <input type="checkbox" class="mb-2 mr-sm-2 mb-sm-0" /> {{manu.name}}
+        </div>
+
+        <!-- ng-click='addSub($index)' -->
+        <button type="button" ng-click='comfirm()' value="Confirm" class="btn btn-sm btn-danger">Confirm</button>
     </div>
+
+
+
+    <div class="container theme-showcase" role="main">
+        <div ng-repeat="context in contexts" class="padding5">
+            Context:
+            <input type="text" ng-model="context.context" required/> &nbsp;&nbsp;&nbsp;&nbsp; Title:
+            <input type="text" ng-model="context.title" required> Author: {{context.user}}&nbsp;&nbsp; Time: {{context.sysTime}}&nbsp;&nbsp;&nbsp;
+            <button type="button" value="Del" class="btn btn-sm btn-info" ng-click='upd(context)'>Upd</button> &nbsp;&nbsp;&nbsp;
+            <button type="button" value="Del" class="btn btn-sm btn-danger" ng-click='del(context.id,$index)'>Del</button>
+            <br>
+        </div>
+    </div>
+
+
     <!-- /container -->
     <script src="../js/angular.js"></script>
     <script src="../js/jquery.js"></script>
@@ -76,38 +88,53 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
     <script src="../js/const.js"></script>
+
+
     <script type="text/javascript">
-        angular.module('notesApp', []).controller('MainCtrl', ['$http', '$scope', '$window', function($http, $scope, $window) {
-            //check is login
+        var app = angular.module('notesApp', []);
+        app.controller('MainCtrl', function($scope, $http, $location) {
             $http.get(globaleURL + "app/getSession?id=isLogin")
                 .error(function(data, status, headers, config) {
                     $window.location.href = '../login/login.html';
                 });
 
-            $http.get(globaleURL + "app/getHomePage")
+            var self = this;
+            $http.get(globaleURL + "app/context/all")
                 .then(function(response) {
-                    $scope.home = response.data.substring(0, response.data.length - 1).substr(1);
+                    $scope.contexts = response.data;
                 });
 
-            var self = this;
-            self.submit = function() {
+            $scope.del = function(id, i) {
                 if (confirm("Are you sure?")) {
                     $http({
-                            method: 'POST',
-                            url: globaleURL + 'app/updHomePage',
-                            contentType: 'application/json',
-                            data: $scope.home
+                            method: 'GET',
+                            url: globaleURL + 'app/delContext?del_id=' + id
                         })
                         .success(function(data, status, headers, config) {
                             alert("done!");
-                            //TODO reflash page!!!
                         }).error(function(data, status, headers, config) {
-                            //TODO handle 403!
+                            alert("please check input data");
+                        });
+                    $scope.contexts.splice(i, 1);
+                }
+            }
+
+            $scope.upd = function(context) {
+                if (confirm("Are you sure?")) {
+                    $http({
+                            method: 'POST',
+                            url: globaleURL + 'app/updContext',
+                            contentType: 'application/json',
+                            data: context
+                        })
+                        .success(function(data, status, headers, config) {
+                            alert("done!");
+                        }).error(function(data, status, headers, config) {
                             alert("please check input data");
                         });
                 }
             }
-        }]);
+        });
     </script>
 </body>
 

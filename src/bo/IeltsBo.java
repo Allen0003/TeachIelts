@@ -88,15 +88,20 @@ public class IeltsBo {
 		}
 		return contextDao.getContext(categorization);
 	}
-	
+
 	public ArrayList<FileContext> getContext() throws Exception {
 		if (contextDao == null) {
 			contextDao = new ContextDao(this.conn);
 		}
 		return contextDao.getContext();
 	}
-	
-	
+
+	public boolean updContext(FileContext fileContext) throws Exception {
+		if (contextDao == null) {
+			contextDao = new ContextDao(this.conn);
+		}
+		return contextDao.updContext(fileContext);
+	}
 
 	public boolean checkLogin(User user) throws Exception {
 		if (userDao == null) {
