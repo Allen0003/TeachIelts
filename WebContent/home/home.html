@@ -1,192 +1,129 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="notesApp">
-
+<html ng-app="modalTest">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<meta name="description" content="">
-	<meta name="author" content="Allen">
-	<link rel="icon" href="../icon/Think IELTS Lightbulb.jpg">
-
-	<title>Ielts</title>
-
-	<!-- Bootstrap core CSS -->
-	<link href="../css/bootstrap.css" rel="stylesheet">
-	<!-- Bootstrap theme -->
-	<link href="../css/bootstrap-theme.css" rel="stylesheet">
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-	<!-- Custom styles for this template -->
+	<meta charset="UTF-8">
+	<link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css'>
 	<link href="../css/theme.css" rel="stylesheet">
 	<link href="../css/context.css" rel="stylesheet">
-	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-	<!--[if lt IE 9]><script src="../../js/ie8-responsive-file-warning.js"></script><![endif]-->
-	<script src="../js/ie-emulation-modes-warning.js"></script>
-
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
+<body>
 
-<body role="document" ng-controller="MainCtrl as ctrl">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+		<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
+		<script src="https://m-e-conroy.github.io/angular-dialog-service/javascripts/dialogs.min.js" type="text/javascript"></script>
+	</head>
 
-	<div ng-controller="ContactUsCtrl as subCtrl">
-		<button id="contactUs" ng-click="subCtrl.showCotact()">
-			<p><font color = "white"><b>Contact us!</b></font></p></button>
-		<div ng-show="subCtrl.getIsShown()" id="contactUsForm">
-			<form ng-submit="subCtrl.submit()">
-				<div class="form-group">
-					<label for="exampleInputEmail1">Email address</label>
-					<input type="email" class="form-control" placeholder="Enter email" ng-model="subCtrl.mail.emailAddress" required>
-					<small class="form-text text-muted">We'll never share your email with anyone else.</small>
-				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Title</label>
-					<input type="text" ng-model="subCtrl.mail.title" class="form-control" placeholder="Title" required>
-				</div>
-				<div class="form-group">
-					<textarea style="width: 400px; height: 200px;" ng-model="subCtrl.mail.context" placeholder="Context" required>
-					</textarea>
-				</div>
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form>
-		</div>
-	</div>
+	<body role="document" ng-controller="dialogServiceTest" class="pad">
 
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-			<span class="sr-only">Toggle navigation</span> <span
-				class="icon-bar"></span> <span class="icon-bar"></span> <span
-				class="icon-bar"></span>
-		</button>
-				<a class="navbar-brand" href="../home/home.html">Home</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav" ng-repeat="manu in manus">
-					<li ng-show="manu.isMain && manu.isDrop == 'N' ">
-						<a href="../context/reading.html#?val={{manu.value}}"> {{manu.name}}
-						</a>
-					</li>
-					<li ng-show="manu.isMain && manu.isDrop " class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-										{{manu.name}} <span class="caret"></span>
-										</a>
-						<ul class="dropdown-menu">
-							<li ng-repeat="manuSubs in manu.mySubs"><a href="../context/reading.html#?val={{manuSubs.value}}">{{manuSubs.name}}</a></li>
-						</ul>
-						<li class="floatABRight" ng-show="$last">
-							<a href="../login/login.html">Login</a>
+		<button id="contactUs" ng-click="contactUs()">
+				<p><font color = "white"><b>Contact us!</b></font></p></button>
+
+
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+					<a class="navbar-brand" href="../home/home.html">Home</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav" ng-repeat="manu in manus">
+						<li ng-show="manu.isMain && manu.isDrop == 'N' ">
+							<a href="../context/reading.html#?val={{manu.value}}"> {{manu.name}}
+							</a>
 						</li>
-				</ul>
+						<li ng-show="manu.isMain && manu.isDrop " class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+											{{manu.name}} <span class="caret"></span>
+											</a>
+							<ul class="dropdown-menu">
+								<li ng-repeat="manuSubs in manu.mySubs"><a href="../context/reading.html#?val={{manuSubs.value}}">{{manuSubs.name}}</a></li>
+							</ul>
+							<li class="floatABRight" ng-show="$last">
+								<a href="../login/login.html">Login</a>
+							</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<br><br><br>
+		<div class="container theme-showcase" role="main">
+			<div class="w150 floatLeft">
+				<img src="../icon/ThinkIELTS Logo.png" class="goHome" />
+			</div>
+			<br><br><br>
+			<div class="jumbotron">
+				<h1>Teacher Chris: </h1>
+				<p>{{home}}</p>
+			</div>
+			<br><br><br>
+			<br><br><br>
+			<div>
+				<p class="floatRight">
+					<img src="../icon/homeImage.png" />
+				</p>
 			</div>
 		</div>
-	</nav>
+	</body>
 
-	<div class="container theme-showcase" role="main">
-		<div class="w150 floatLeft">
-			<img src="../icon/ThinkIELTS Logo.png" class="goHome" />
+</html>
 
-		</div>
-		<br><br><br>
-		<div class="jumbotron">
-			<h1>Teacher Chris: </h1>
-			<p>{{home}}</p>
-		</div>
-		<br><br><br>
-		<br><br><br>
-		<div>
-			<p class="floatRight">
-				<img src="../icon/homeImage.png" />
-			</p>
-		</div>
-	</div>
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/const.js"></script>
+<script type="text/javascript">
+	angular.module('modalTest', ['ui.bootstrap', 'dialogs'])
+		.controller('dialogServiceTest', function($scope, $http, $dialogs) {
 
-	<script src="../js/jquery.js"></script>
-	<script src="../js/bootstrap.js"></script>
-	<script src="../js/const.js"></script>
-	<script src="../js/angular.js"></script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="../js/ie10-viewport-bug-workaround.js"></script>
-	<!-- <script src="../js/contactUs.js"></script>  -->
+			$http.get(globaleURL + "app/getManuBar")
+				.then(function(response) {
+					$scope.manus = response.data;
+				});
+			$http.get(globaleURL + "app/getHomePage")
+				.then(function(response) {
+					$scope.home = response.data.substring(0, response.data.length - 1).substr(1);
+				});
 
-	<script type="text/javascript">
-		var app = angular.module('notesApp', []);
-		app
-			.service('contactUsService', [contactUsService]) //DI service
-			.controller('MainCtrl', function($scope, $http, $location) {
-				$http.get(globaleURL + "app/getManuBar")
-					.then(function(response) {
-						$scope.manus = response.data;
+			$scope.contactUs = function() {
+				$dialogs.create('mailSub.html', 'mailCtrl', {}, {
+					key: false,
+					back: 'static'
+				});
+			};
+		})
+		.controller('mailCtrl', function($scope, $http, $modalInstance) {
+			$scope.cancel = function() {
+				$modalInstance.dismiss('canceled');
+			};
+			$scope.save = function() {
+				$http({
+						method: 'POST',
+						url: globaleURL + 'app/sendMail',
+						data: this.mail,
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					})
+					.success(function(data, status, headers, config) {
+						alert("done!");
+					}).error(function(data, status, headers, config) {
+						alert("please check input data");
 					});
-				$http.get(globaleURL + "app/getHomePage")
-					.then(function(response) {
-						$scope.home = response.data.substring(0, response.data.length - 1).substr(1);
-					});
-			})
-			.controller('ContactUsCtrl', ['contactUsService', '$http', function(contactUsService, $http) {
-				var self = this;
-				var util = contactUsService;
-				self.showCotact = function() {
-					util.setShow();
-				};
 
-				self.submit = function() {
-					console.log(JSON.stringify(self.mail));
-
-					var mail = {
-						emailAddress: "OPEN",
-						title: "1338364250000",
-						context: "1336364253400"
-					};
-
-
-					$http({
-							method: 'POST',
-							url: globaleURL + 'app/sendMail',
-							data: mail,
-							headers: {
-								'Content-Type': 'application/json'
-							}
-						})
-						.success(function(data, status, headers, config) {
-							alert("done!");
-							util.setNoShow();
-						}).error(function(data, status, headers, config) {
-							alert("please check input data");
-						});
-				}
-
-				self.getIsShown = function() {
-					return util.shown();
-				};
-			}]);
-
-
-		function contactUsService() {
-			var isShown = false;
-			//private paramters for service
-
-			//public
-			this.setShow = function() {
-				isShown = true;
+				$modalInstance.close();
 			};
-
-			this.setNoShow = function() {
-				isShown = false;
-			};
-
-			this.shown = function() {
-				return isShown;
-			};
-		}
-	</script>
+		})
+		.run(['$templateCache', function($templateCache, $http) {
+			$templateCache.put('mailSub.html',
+				'<div class="modal"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"><span class="glyphicon glyphicon-star"></span>Contact Us</h4></div><div class="modal-body"><ng-form name="nameDialog" novalidate role="form"><div class="form-group input-group-lg"><label for="exampleInputEmail1">Email address</label><input type="email" class="form-control" placeholder="Enter email" ng-model="mail.emailAddress" required><small class="form-text text-muted">We will never share your email with anyone else.</small></div><div class="form-group"><label for="exampleInputPassword1">Title</label><input type="text" ng-model="mail.title" class="form-control" placeholder="Title" required></div><div class="form-group"><textarea style="width: 400px; height: 200px;" ng-model="mail.context" placeholder="Context" required></textarea></div></ng-form></div><div class="modal-footer"><button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button><button type="button" class="btn btn-primary" ng-click="save()" ng-disabled="(nameDialog.$dirty && nameDialog.$invalid)">Save</button></div></div></div></div>'
+			);
+		}]);
+</script>
 </body>
 
 </html>

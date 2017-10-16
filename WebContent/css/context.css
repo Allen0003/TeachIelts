@@ -67,10 +67,9 @@
 	margin-top: 5px;
 }
 
-.padding5{
+.padding5 {
 	padding: 5px;
 }
-
 
 #contactUs {
 	position: fixed;
@@ -92,4 +91,20 @@
 	left: 50%;
 	margin-top: -100px; /* Negative half of height. */
 	margin-left: -250px; /* Negative half of width. */
+}
+
+.modal {
+	display: block;
+}
+
+.dialog-header-confirm {
+	background-color: #333333;
+}
+
+.dialog-header-confirm span, .dialog-header-confirm h4 {
+	color: #ffffff;
+}
+
+.pad {
+	padding: 25px;
 }
