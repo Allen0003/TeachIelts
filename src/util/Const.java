@@ -32,5 +32,5 @@ public class Const {
 	public static HashMap<String, String> manuMap = new HashMap<String, String>();
 	
 	
-	public final static String email = "apss1943@gmail.com";
+	public final static String email = "thinkielts.manuk@gmail.com";
 }

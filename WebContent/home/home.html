@@ -28,7 +28,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-					<a class="navbar-brand" href="../home/home.html">Home</a>
+					<a class="navbar-brand" href="../home/home.html" style="padding-top: 23px;">Home</a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav" ng-repeat="manu in manus">
@@ -61,8 +61,6 @@
 				<h1>Teacher Chris: </h1>
 				<p>{{home}}</p>
 			</div>
-			<br><br><br>
-			<br><br><br>
 			<div>
 				<p class="floatRight">
 					<img src="../icon/homeImage.png" />
@@ -110,9 +108,7 @@
 						}
 					})
 					.success(function(data, status, headers, config) {
-						alert("done!");
 					}).error(function(data, status, headers, config) {
-						alert("please check input data");
 					});
 
 				$modalInstance.close();

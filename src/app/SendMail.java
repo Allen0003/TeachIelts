@@ -15,8 +15,6 @@ import javax.ws.rs.core.Response;
 import entity.Mail;
 import util.Const;
 
-//TODO need email server or gmail account and password
-
 @Path("/sendMail")
 public class SendMail {
 	@POST
@@ -40,7 +38,7 @@ public class SendMail {
 			// Step3
 			Transport transport = session.getTransport("smtp");
 
-			transport.connect("smtp.gmail.com", "apss1943", "Zaq1Xsw2");
+			transport.connect("smtp.gmail.com", "thinkielts.manuk", "labour123");
 			transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 			transport.close();
 		} catch (Exception e) {
