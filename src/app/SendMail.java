@@ -38,7 +38,7 @@ public class SendMail {
 			// Step3
 			Transport transport = session.getTransport("smtp");
 
-			transport.connect("smtp.gmail.com", "thinkielts.manuk", "labour123");
+			transport.connect("smtp.gmail.com", "thinkielts.manuk", "labour1234");
 			transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 			transport.close();
 		} catch (Exception e) {

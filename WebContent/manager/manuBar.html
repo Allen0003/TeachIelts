@@ -20,16 +20,6 @@
 
     <!-- Custom styles for this template -->
     <link href="../css/theme.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body role="document" ng-controller="MainCtrl as ctrl">
@@ -57,12 +47,12 @@
         </div>
     </nav>
 
-    <div class="centeredDiv" ng-show="showCenter">
+    <div class="rightedDiv" ng-show="showCenter">
+        <!--only show subclass-->
         <div ng-repeat="manu in manus" ng-show="manu.order==''">
-            <input type="checkbox" class="mb-2 mr-sm-2 mb-sm-0" /> {{manu.name}}
+            <input type="checkbox" class="mb-2 mr-sm-2 mb-sm-0"
+            ng-model="manu.selected" value={{manu.name}}/> {{manu.name}}
         </div>
-
-        <!-- ng-click='addSub($index)' -->
         <button type="button" ng-click='comfirm()' value="Confirm" class="btn btn-sm btn-danger">Confirm</button>
     </div>
 
@@ -77,11 +67,11 @@
                     <label class="sr-only" for="inlineFormInput"></label>
                     <input type="text" class="mb-2 mr-sm-2 mb-sm-0 widthInherit" ng-model="manu.name" ng-change="assignValue(manu.name,manu)" required/> Value: <label class="sr-only" for="inlineFormInput"></label>
                     <input type="text" class="mb-2 mr-sm-2 mb-sm-0 readOnly widthInherit" ng-model="manu.value" readonly required> Subclass: <label class="sr-only" for="inlineFormInput"></label>
-                    <input type="text" class="mb-2 mr-sm-2 mb-sm-0 widthInherit" ng-model="manu.subClass" ng-readonly="manu.isMain == 'Y'"> IsDrop:
-                    <input class="form-check-input" type="checkbox" ng-model="manu.isDrop" ng-checked="manu.isDrop == 'Y'" ng-change="setCheckBox2(manu.isDrop,manu)"> Order:
+                    <input type="text" class="mb-2 mr-sm-2 mb-sm-0 readOnly widthInherit" ng-model="manu.subClass"  readonly> IsDrop:
+                    <input class="form-check-input readOnly" type="checkbox" ng-model="manu.isDrop" ng-checked="manu.isDrop == 'Y'" ng-change="setCheckBox2(manu.isDrop,manu)"> Order:
                     <label class="sr-only" for="inlineFormInput"></label>
                     <input type="text" size="2" class="mb-2 mr-sm-2 mb-sm-0 readOnly widthInherit" ng-model="manu.order" readonly>
-                    <button type="button" value="Sub" class="btn btn-sm btn-success" ng-click='addSub($index)'>Sub</button>
+                    <button type="button" value="Sub" class="btn btn-sm btn-success" ng-click='addSub(manu.value)' ng-show="manu.isMain == 'Y'" >Sub</button>
                     <button type="button" value="Del" class="btn btn-sm btn-info" ng-click='del($index)'>Del</button>
                 </li>
             </ul>
@@ -101,8 +91,6 @@
     <script src="../js/angular.js"></script>
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../js/ie10-viewport-bug-workaround.js"></script>
     <script src="../js/const.js"></script>
 
 
@@ -110,15 +98,27 @@
         var app = angular.module('notesApp', ['ui.sortable']);
         app.controller('MainCtrl', function($scope, $http, $location) {
             var showCenter = false;
+            var mainClass = "";
 
-            $scope.addSub = function(i) {
+            $scope.addSub = function(name) {
+                mainClass = name;
                 $scope.showCenter = true;
             }
 
             $scope.comfirm = function() {
+                angular.forEach($scope.manus, function(manu) {
+                    if (manu.selected) {
+                        manu.subClass = mainClass;
+                    }
+                    if (manu.value === mainClass){
+                        manu.isDrop = "Y";
+                    }
+                });
                 $scope.showCenter = false;
+                mainClass = "";
             }
 
+            //changing order
             $scope.$watch("manus", function() {
                 var i = 1;
                 for (var manu in $scope.manus) {

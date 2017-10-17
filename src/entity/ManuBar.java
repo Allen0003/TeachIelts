@@ -16,7 +16,17 @@ public class ManuBar {
 
 	String isDrop;
 
+	String selected;
+
 	ArrayList<ManuBar> mySubs;
+
+	public String getSelected() {
+		return selected;
+	}
+
+	public void setSelected(String selected) {
+		this.selected = selected;
+	}
 
 	public String getName() {
 		return name;

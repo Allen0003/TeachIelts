@@ -24,17 +24,16 @@ body {
 .readOnly {
 	background-color: darkgray;
 	cursor: not-allowed;
-  border: 1px solid #ccc;
+	border: 1px solid #ccc;
 }
 
 li {
 	margin: 8px;
 }
 
-.centeredDiv {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
+.rightedDiv {
+	position: fixed;
+	top: 90%;
+	left: 90%;
+	transform: translate(-50%, -50%);
 }
