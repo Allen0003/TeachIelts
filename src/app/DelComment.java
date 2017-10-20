@@ -15,7 +15,7 @@ import bo.IeltsBo;
 import filter.CheckLogin;
 import util.Const;
 
-@Path("/delContext")
+@Path("/delComment")
 public class DelComment {
 	@Context
 	private HttpServletRequest request;

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import entity.FileContext;
 import util.Const;
+import util.Util;
 
 public class ContextDao {
 	Connection conn;
@@ -29,7 +30,7 @@ public class ContextDao {
 			context.setUser(rs.getString("sysUser"));
 			context.setSysTime(rs.getString("sysTime"));
 			context.setTitle(rs.getString("title"));
-			context.setId(rs.getString("Id"));
+			context.setId(Util.encryptID(rs.getString("Id")));
 			contexts.add(context);
 		}
 		return contexts;
@@ -51,13 +52,12 @@ public class ContextDao {
 	public ArrayList<FileContext> getContextId(String id) throws Exception {
 		String sql = "select * from Ielts.Context where Id = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, id);
+		pstmt.setString(1, Util.decryptID(id));
 		return doGetQuery(pstmt);
 	}
 
 	public boolean setContext(FileContext fileContext) throws Exception {
-		String sql = "insert into Ielts.Context " + "(Categorization, Context, IsShow, SysUser, SysTime, Title)"
-				+ " values(?,?,?,?,?,?)";
+		String sql = "insert into Ielts.Context (Categorization, Context, IsShow, SysUser, SysTime, Title) values(?,?,?,?,?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, fileContext.getCategorization());
 		pstmt.setString(2, fileContext.getContext());
@@ -69,9 +69,9 @@ public class ContextDao {
 	}
 
 	public boolean delContext(int del_id) throws Exception {
-		String sql = "delete from Ielts.Context where Id = ? ";
+		String sql = "delete from Ielts.Context where Id = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, del_id);
+		pstmt.setInt(1, Integer.valueOf(Util.decryptID(String.valueOf(del_id))));
 		return pstmt.executeUpdate() == Const.sqlOK;
 	}
 
@@ -80,7 +80,7 @@ public class ContextDao {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, fileContext.getContext());
 		pstmt.setString(2, fileContext.getTitle());
-		pstmt.setString(3, fileContext.getId());
+		pstmt.setString(3, Util.decryptID(fileContext.getId()));
 		return pstmt.executeUpdate() == Const.sqlOK;
 	}
 

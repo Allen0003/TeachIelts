@@ -15,22 +15,9 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
     <!-- Bootstrap theme -->
     <link href="../css/bootstrap-theme.css" rel="stylesheet">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
     <link href="../css/theme.css" rel="stylesheet">
-
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <link href="../css/context.css" rel="stylesheet">
 </head>
 
@@ -86,7 +73,9 @@
         </div>
         <div class="floatLeft ml50">
             <div ng-repeat="item in items | filter:myFilter " class="animate mt30">
-                <div class="header">{{item.title}}</div>
+                <div class="header">
+                    <a ng-href="../context/comment.html?id={{item.id}}" target="_blank">
+                  {{item.title}}</a></div>
                 </br>
                 <div compile="item.context"></div>
                 </br>
@@ -96,7 +85,6 @@
             </div>
         </div>
     </div>
-    <!-- /container -->
 
     <script src="../js/function.js"></script>
     <script src="../js/angular.js"></script>
@@ -104,8 +92,6 @@
     <script src="../js/jquery.js"></script>
     <script src="../js/const.js"></script>
     <script src="../js/bootstrap.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../js/ie10-viewport-bug-workaround.js"></script>
     <script type="text/javascript">
         var app = angular.module('notesApp', []);
         app.controller('MainCtrl', function($scope, $http, $location, $filter) {
@@ -154,7 +140,6 @@
                     angular.forEach(collection, function(item) {
                         var temp = item.sysTime.substring(0, 7);
                         item.monthFilter = temp;
-                        // console.log(item);
                         if (months.indexOf(temp) === -1) {
                             months.push(temp);
                             output.push(item);

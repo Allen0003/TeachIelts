@@ -17,9 +17,9 @@ public class CommentDao {
 	}
 
 	public boolean setComment(Comment comment) throws Exception {
-		String sql = "insert into Ielts.Comment " + "(Id, comment, sysUser, sysTime, email)" + " values(?,?,?,?,?)";
+		String sql = "insert into Ielts.Comment (Id, comment, sysUser, sysTime, email) values(?,?,?,?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, comment.getId());
+		pstmt.setString(1, Util.decryptID(comment.getId()));
 		pstmt.setString(2, comment.getComment());
 		pstmt.setString(3, comment.getSysUser());
 		pstmt.setString(4, comment.getSysTime());
@@ -30,14 +30,13 @@ public class CommentDao {
 	public ArrayList<Comment> getCommentId(String id) throws Exception {
 		String sql = "select * from Ielts.Comment where Id = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, id);
+		pstmt.setString(1, Util.decryptID(id));
 		ResultSet rs = pstmt.executeQuery();
 		Comment comment = null;
 		ArrayList<Comment> comments = new ArrayList<Comment>();
 
 		while (rs.next()) {
 			comment = new Comment();
-			System.out.println(Util.encryptID(rs.getString("Id")));
 			comment.setId(Util.encryptID(rs.getString("Id")));
 			comment.setComment(rs.getString("Comment"));
 			comment.setSysUser(rs.getString("sysUser"));

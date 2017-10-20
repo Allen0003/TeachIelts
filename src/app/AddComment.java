@@ -24,7 +24,6 @@ public class AddComment {
 
 	@POST
 	public Response addComment(Comment comment) {
-
 		IeltsBo bo = null;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();

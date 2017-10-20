@@ -21,7 +21,6 @@ import filter.CheckLogin;
 import util.Const;
 
 @Path("/upload")
-
 public class AddContext {
 
 	@Context
