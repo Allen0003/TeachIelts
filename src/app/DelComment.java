@@ -16,18 +16,19 @@ import filter.CheckLogin;
 import util.Const;
 
 @Path("/delContext")
-public class DelContext {
+public class DelComment {
 	@Context
 	private HttpServletRequest request;
 
 	@GET
 	@ResourceFilters(CheckLogin.class)
-	public Response delComment(@QueryParam("del_id") int del_id) {
+	public Response delContext(@QueryParam("id") String id, @QueryParam("sysTime") String sysTime) {
+
 		IeltsBo bo = null;
 		boolean result = false;
 		try {
 			bo = new IeltsBo();
-			result = bo.delContext(del_id);
+			result = bo.delComment(id, sysTime);
 		} catch (Exception e) {
 			Const.LOGGER.log(Level.WARNING, e.toString(), e);
 		}

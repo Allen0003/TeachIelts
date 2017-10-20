@@ -59,4 +59,26 @@ public class GetContext {
 		}
 		return Response.status(200).entity(new Gson().toJson(result)).build();
 	}
+
+	@GET
+	@Path("context/id/{id}")
+	public Response getCnetextById(@PathParam("id") String id) {
+		ArrayList<FileContext> result = null;
+		IeltsBo bo = null;
+		try {
+			bo = new IeltsBo();
+			result = bo.getContextId(id);
+		} catch (Exception e) {
+			Const.LOGGER.log(Level.WARNING, e.toString(), e);
+		} finally {
+			if (bo != null) {
+				try {
+					bo.disconnect();
+				} catch (Exception e) {
+
+				}
+			}
+		}
+		return Response.status(200).entity(new Gson().toJson(result)).build();
+	}
 }

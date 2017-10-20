@@ -5,10 +5,12 @@ import java.sql.DriverManager;
 import java.util.ArrayList;
 
 import dao.AWSSQL;
+import dao.CommentDao;
 import dao.ContextDao;
 import dao.HomePageDao;
 import dao.ManuBarDao;
 import dao.UserDao;
+import entity.Comment;
 import entity.FileContext;
 import entity.ManuBar;
 import entity.User;
@@ -22,6 +24,9 @@ public class IeltsBo {
 	ContextDao contextDao;
 	ManuBarDao manuBarDao;
 	HomePageDao homePageDao;
+
+	CommentDao commentDao;
+
 	AWSSQL awsSQL;
 
 	public IeltsBo() throws Exception {
@@ -87,6 +92,34 @@ public class IeltsBo {
 			contextDao = new ContextDao(this.conn);
 		}
 		return contextDao.getContext(categorization);
+	}
+
+	public ArrayList<FileContext> getContextId(String id) throws Exception {
+		if (contextDao == null) {
+			contextDao = new ContextDao(this.conn);
+		}
+		return contextDao.getContextId(id);
+	}
+
+	public ArrayList<Comment> getCommentId(String id) throws Exception {
+		if (commentDao == null) {
+			commentDao = new CommentDao(this.conn);
+		}
+		return commentDao.getCommentId(id);
+	}
+
+	public boolean setComment(Comment comment) throws Exception {
+		if (commentDao == null) {
+			commentDao = new CommentDao(this.conn);
+		}
+		return commentDao.setComment(comment);
+	}
+
+	public boolean delComment(String id, String sysTime) throws Exception {
+		if (commentDao == null) {
+			commentDao = new CommentDao(this.conn);
+		}
+		return commentDao.delComment(id, sysTime);
 	}
 
 	public ArrayList<FileContext> getContext() throws Exception {

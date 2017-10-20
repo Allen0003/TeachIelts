@@ -48,6 +48,13 @@ public class ContextDao {
 		return doGetQuery(pstmt);
 	}
 
+	public ArrayList<FileContext> getContextId(String id) throws Exception {
+		String sql = "select * from Ielts.Context where Id = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, id);
+		return doGetQuery(pstmt);
+	}
+
 	public boolean setContext(FileContext fileContext) throws Exception {
 		String sql = "insert into Ielts.Context " + "(Categorization, Context, IsShow, SysUser, SysTime, Title)"
 				+ " values(?,?,?,?,?,?)";

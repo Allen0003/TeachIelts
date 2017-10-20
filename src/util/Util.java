@@ -62,4 +62,26 @@ public class Util {
 			}
 		}
 	}
+
+	private static final int[] def = { 0, 22, 22, 26, 22, 20, 28, 27, 28, 23 };
+
+	public static String encryptID(String plainID) {
+		char[] cc = plainID.trim().toUpperCase().toCharArray();
+
+		StringBuffer rslt = new StringBuffer();
+		for (int i = 0; i < cc.length; i++) {
+			rslt.append((char) (cc[i] + def[i]));
+		}
+		return rslt.toString();
+	}
+
+	public static String decryptID(String encID) {
+		char[] cc = encID.toCharArray();
+		StringBuffer rslt = new StringBuffer();
+		for (int i = 0; i < cc.length; i++) {
+			rslt.append((char) (cc[i] - def[i]));
+		}
+		return rslt.toString();
+	}
+
 }

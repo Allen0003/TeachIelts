@@ -30,7 +30,6 @@ public class Const {
 	public final static String isLogin = "true";
 
 	public static HashMap<String, String> manuMap = new HashMap<String, String>();
-	
-	
+
 	public final static String email = "thinkielts.manuk@gmail.com";
 }
