@@ -84,7 +84,8 @@
     <script src="../js/bootstrap.js"></script>
     <script src="../js/const.js"></script>
     <script type="text/javascript">
-        angular.module('notesApp', []).controller('MainCtrl', ['$http', '$scope', '$window', function($http, $scope, $window) {
+        angular.module('notesApp', [])
+        .controller('MainCtrl', ['$http', '$scope', '$window', function($http, $scope, $window) {
             //check is login
             $http.get(globaleURL + "app/getSession?id=isLogin")
                 .error(function(data, status, headers, config) {
