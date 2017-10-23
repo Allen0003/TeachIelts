@@ -2,11 +2,11 @@ package entity;
 
 public class Mail {
 
-	String emailAddress;
+	private String emailAddress;
 
-	String title;
+	private String title;
 
-	String context;
+	private	String context;
 
 	public String getEmailAddress() {
 		return emailAddress;

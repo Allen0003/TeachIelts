@@ -2,10 +2,10 @@ package entity;
 
 public class Upload {
 
-	public String title;
-	public String context;
+	private String title;
+	private String context;
 
-	public String categorization;
+	private String categorization;
 
 	public String getCategorization() {
 		return categorization;

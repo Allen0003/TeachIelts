@@ -1,11 +1,11 @@
 package entity;
 
 public class Comment {
-	String Id;
-	String comment;
-	String sysUser;
-	String sysTime;
-	String email;
+	private String Id;
+	private String comment;
+	private String sysUser;
+	private String sysTime;
+	private String email;
 
 	public String getId() {
 		return Id;

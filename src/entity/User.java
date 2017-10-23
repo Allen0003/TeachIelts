@@ -1,9 +1,9 @@
 package entity;
 
 public class User {
-	String username;
+	private String username;
 
-	String password;
+	private String password;
 
 	public String getUsername() {
 		return username;

@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 public class ManuBar {
 
-	String name;
+	private String name;
 
-	String value;
+	private String value;
 
-	String subClass;
+	private 	String subClass;
 
-	String isMain;
+	private String isMain;
 
-	String order;
+	private String order;
 
-	String isDrop;
+	private String isDrop;
 
-	String selected;
+	private String selected;
 
-	ArrayList<ManuBar> mySubs;
+	private ArrayList<ManuBar> mySubs;
 
 	public String getSelected() {
 		return selected;
