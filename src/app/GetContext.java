@@ -14,10 +14,10 @@ import bo.IeltsBo;
 import entity.FileContext;
 import util.Const;
 
-@Path("/")
+@Path("/context/")
 public class GetContext {
 	@GET
-	@Path("context/{action}")
+	@Path("{action}")
 	public Response getReading(@PathParam("action") String action) {
 		ArrayList<FileContext> result = null;
 		IeltsBo bo = null;
@@ -39,7 +39,7 @@ public class GetContext {
 	}
 
 	@GET
-	@Path("context/all")
+	@Path("all")
 	public Response getAll() {
 		ArrayList<FileContext> result = null;
 		IeltsBo bo = null;
@@ -61,7 +61,7 @@ public class GetContext {
 	}
 
 	@GET
-	@Path("context/id/{id}")
+	@Path("id/{id}")
 	public Response getCnetextById(@PathParam("id") String id) {
 		ArrayList<FileContext> result = null;
 		IeltsBo bo = null;

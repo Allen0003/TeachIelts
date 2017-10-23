@@ -12,25 +12,10 @@
     <link href="../css/Font/font.css" rel="stylesheet">
     <link href="../css/build.css" rel="stylesheet">
     <link href="../css/context.css" rel="stylesheet">
-    <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
     <link href="../css/bootstrap-theme.css" rel="stylesheet">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="../css/theme.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body role="document" ng-controller="MainCtrl as ctrl">
@@ -62,8 +47,6 @@
         <div ng-repeat="manu in manus" ng-show="manu.order==''">
             <input type="checkbox" class="mb-2 mr-sm-2 mb-sm-0" /> {{manu.name}}
         </div>
-
-        <!-- ng-click='addSub($index)' -->
         <button type="button" ng-click='comfirm()' value="Confirm" class="btn btn-sm btn-danger">Confirm</button>
     </div>
 
@@ -71,28 +54,42 @@
 
     <div class="container theme-showcase" role="main">
         <div ng-repeat="context in contexts" class="padding5">
+            <form action="../app/uploadFile" method="post" enctype="multipart/form-data">
+
+                <input type="submit" class="btn btn-sm btn-primary" value="Upload" style="float: right" ;/>
+
+                <div style="float:right">
+                    <span class="btn">
+                  <input type="file" name="file" size="45" required/>
+                  </span>
+                    <input type="hidden" name="fileId" value="{{context.id}}">
+                </div>
+
+            </form>
             Context:
             <input type="text" ng-model="context.context" required/> &nbsp;&nbsp;&nbsp;&nbsp; Title:
             <input type="text" ng-model="context.title" required> Author: {{context.user}}&nbsp;&nbsp; Time: {{context.sysTime}}&nbsp;&nbsp;&nbsp;
-            <button type="button" value="Del" class="btn btn-sm btn-info" ng-click='upd(context)'>Upd</button> &nbsp;&nbsp;&nbsp;
-            <button type="button" value="Del" class="btn btn-sm btn-danger" ng-click='del(context.id,$index)'>Del</button>
+            <button type="button" value="Upd" class="btn btn-sm btn-info" ng-click='upd(context)'>Upd</button> &nbsp;&nbsp;&nbsp;
+            <button type="button" value="Del" class="btn btn-sm btn-danger" ng-click='del(context.id,$index)'>Del</button>&nbsp;&nbsp;&nbsp;
+            <br>
+            <div ng-repeat="file in files" ng-show="file.id == context.id">
+                <button type="button" class="btn btn-sm btn-warning" ng-click='delFile(file.id,file.FileName)' style="float:left;margin-right:10px">
+                    {{file.FileName}}
+                </button>
+            </div>
             <br>
         </div>
     </div>
 
-
-    <!-- /container -->
     <script src="../js/angular.js"></script>
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../js/ie10-viewport-bug-workaround.js"></script>
     <script src="../js/const.js"></script>
 
 
     <script type="text/javascript">
         var app = angular.module('notesApp', []);
-        app.controller('MainCtrl', function($scope, $http, $location) {
+        app.controller('MainCtrl', function($scope, $http, $location, $window) {
             $http.get(globaleURL + "app/getSession?id=isLogin")
                 .error(function(data, status, headers, config) {
                     $window.location.href = '../login/login.html';
@@ -103,6 +100,12 @@
                 .then(function(response) {
                     $scope.contexts = response.data;
                 });
+
+            $http.get(globaleURL + "app/file/getFileAll")
+                .then(function(response) {
+                    $scope.files = response.data;
+                });
+
 
             $scope.del = function(id, i) {
                 if (confirm("Are you sure?")) {
@@ -119,6 +122,24 @@
                 }
             }
 
+            $scope.delFile = function(id, fileName) {
+                if (confirm("Are you sure?")) {
+                    var urlEcode = globaleURL + 'app/delFile?del_id=' + id + "&fileName=" + fileName;
+                    urlEcode = encodeURI(urlEcode);
+                    console.log(urlEcode);
+                    $http({
+                            method: 'GET',
+                            url: urlEcode
+                        })
+                        .success(function(data, status, headers, config) {
+                            alert("done!");
+                        }).error(function(data, status, headers, config) {
+                            alert("please check input data");
+                        });
+                }
+            }
+
+
             $scope.upd = function(context) {
                 if (confirm("Are you sure?")) {
                     $http({
@@ -134,6 +155,18 @@
                         });
                 }
             }
+
+            // $scope.uploadFile = function(id) {
+            //     var file = $scope.myFile;
+            //
+            //     console.log('file is ' + id + "  ");
+            //     console.log(file);
+            //
+            //     // var uploadUrl = "/fileUpload";
+            //     // fileUpload.uploadFileToUrl(file, uploadUrl);
+            // };
+
+
         });
     </script>
 </body>
