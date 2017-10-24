@@ -41,6 +41,14 @@
                 <h1>{{context.title}}</h1>
                 <div compile="context.context"></div>
                 </br>
+
+                <b>Attachments:</b> <br>
+                <div ng-repeat="file in files" ng-show="file.id == context.id">
+                    <button style="float:left;margin-right:10px;" type="button" class="btn btn-sm btn-warning" ng-click='download(file.FileId)'>
+                        {{file.FileName}}
+                    </button>
+                </div>
+                <br><br><br>
                 <div class="bottom">
                     Posted by {{context.user}} in {{context.sysTime}}
                 </div>
@@ -74,7 +82,6 @@
                     <button type="submit" value="Submit" class="btn btn-sm btn-danger">Submit</button>
                 </form>
             </div>
-
         </div>
         <br>
     </div>
@@ -87,7 +94,18 @@
     <script src="../js/bootstrap.js"></script>
     <script type="text/javascript">
         var app = angular.module('notesApp', []);
-        app.controller('MainCtrl', function($scope, $http, $location) {
+        app.controller('MainCtrl', function($scope, $http, $location, $window) {
+
+            $http.get(globaleURL + "app/file/getFileAll")
+                .then(function(response) {
+                    $scope.files = response.data;
+                });
+
+
+            $scope.download = function(id) {
+              $window.open(globaleURL + 'app/file/getFile?id=' + id, "_blank");
+            }
+
 
             var url = new URL(window.location.href);
             var id = url.searchParams.get("id");
