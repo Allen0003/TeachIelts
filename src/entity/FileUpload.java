@@ -12,6 +12,16 @@ public class FileUpload {
 
 	private String SysTime;
 
+	private String FileId;
+
+	public String getFileId() {
+		return FileId;
+	}
+
+	public void setFileId(String fileId) {
+		FileId = fileId;
+	}
+
 	public String getId() {
 		return id;
 	}
