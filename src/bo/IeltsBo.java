@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import dao.AWSSQL;
 import dao.CommentDao;
 import dao.ContextDao;
+import dao.FileDao;
 import dao.HomePageDao;
 import dao.ManuBarDao;
 import dao.UserDao;
 import entity.Comment;
 import entity.FileContext;
+import entity.FileUpload;
 import entity.ManuBar;
 import entity.User;
 import util.Const;
@@ -26,7 +28,7 @@ public class IeltsBo {
 	HomePageDao homePageDao;
 
 	CommentDao commentDao;
-
+	FileDao fileDao;
 	AWSSQL awsSQL;
 
 	public IeltsBo() throws Exception {
@@ -39,6 +41,34 @@ public class IeltsBo {
 			homePageDao = new HomePageDao(conn);
 		}
 		return homePageDao.getHomePage();
+	}
+
+	public FileUpload getFile(String fileId) throws Exception {
+		if (fileDao == null) {
+			fileDao = new FileDao(conn);
+		}
+		return fileDao.getFile(fileId);
+	}
+
+	public ArrayList<FileUpload> getFile() throws Exception {
+		if (fileDao == null) {
+			fileDao = new FileDao(conn);
+		}
+		return fileDao.getFile();
+	}
+
+	public void addFile(FileUpload fileUpload) throws Exception {
+		if (fileDao == null) {
+			fileDao = new FileDao(conn);
+		}
+		fileDao.addFile(fileUpload);
+	}
+
+	public boolean delFile(String fileId) throws Exception {
+		if (fileDao == null) {
+			fileDao = new FileDao(conn);
+		}
+		return fileDao.delFile(fileId);
 	}
 
 	public void updHomeContext(String input) throws Exception {
