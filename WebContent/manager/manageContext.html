@@ -73,7 +73,7 @@
             <button type="button" value="Del" class="btn btn-sm btn-danger" ng-click='del(context.id,$index)'>Del</button>&nbsp;&nbsp;&nbsp;
             <br>
             <div ng-repeat="file in files" ng-show="file.id == context.id">
-                <button type="button" class="btn btn-sm btn-warning" ng-click='delFile(file.id,file.FileName)' style="float:left;margin-right:10px">
+                <button type="button" class="btn btn-sm btn-warning" ng-click='delFile(file.FileId)' style="float:left;margin-right:10px">
                     {{file.FileName}}
                 </button>
             </div>
@@ -122,14 +122,11 @@
                 }
             }
 
-            $scope.delFile = function(id, fileName) {
-                if (confirm("Are you sure?")) {
-                    var urlEcode = globaleURL + 'app/delFile?del_id=' + id + "&fileName=" + fileName;
-                    urlEcode = encodeURI(urlEcode);
-                    console.log(urlEcode);
+            $scope.delFile = function(id) {
+                if (confirm("Delete File?")) {
                     $http({
                             method: 'GET',
-                            url: urlEcode
+                            url: globaleURL + 'app/delFile?del_id=' + id
                         })
                         .success(function(data, status, headers, config) {
                             alert("done!");
@@ -138,8 +135,6 @@
                         });
                 }
             }
-
-
             $scope.upd = function(context) {
                 if (confirm("Are you sure?")) {
                     $http({
@@ -155,18 +150,6 @@
                         });
                 }
             }
-
-            // $scope.uploadFile = function(id) {
-            //     var file = $scope.myFile;
-            //
-            //     console.log('file is ' + id + "  ");
-            //     console.log(file);
-            //
-            //     // var uploadUrl = "/fileUpload";
-            //     // fileUpload.uploadFileToUrl(file, uploadUrl);
-            // };
-
-
         });
     </script>
 </body>
